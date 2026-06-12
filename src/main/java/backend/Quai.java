@@ -8,4 +8,9 @@ public class Quai {
     Ligne ligne;
     int directionId;
     ArrayList<Arete> voisins;
+
+    public Quai(int id, Ligne ligne, Station station){
+        this.voisins = new ArrayList<Arete>();
+        this.station = station;
+    }
 }
