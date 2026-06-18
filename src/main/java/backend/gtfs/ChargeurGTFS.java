@@ -75,6 +75,29 @@ public class ChargeurGTFS {
 		return stops;
 	}
 
+	public Map<String, List<StopTimeGTFS>> lireStopsTime(Path chemin) {
+		Map<String, List<StopTimeGTFS>> stopsTime = new HashMap<>();
+		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {
+			String line;
+			boolean firstLine = true;
+			while ((line = br.readLine()) != null) {
+				if (firstLine) {
+					firstLine = false;
+					continue;
+				}
+				String[] c = line.split(",");
+				StopTimeGTFS st = new StopTimeGTFS(c[0], c[3], c[1], parseInt(c[4]));
+				stopsTime.computeIfAbsent(c[0], k -> new ArrayList<>()).add(st);
+			}
+		} catch (IOException e) {
+			throw new UncheckedIOException("Lecture stop_times.txt impossible", e);
+		}
+		for (List<StopTimeGTFS> liste : stopsTime.values()) {
+			liste.sort(Comparator.comparingInt(StopTimeGTFS::stop_sequence));
+		}
+		return stopsTime;
+	}
+
 	public List<TransferGTFS> lireTransfers(Path chemin) {
 		List<TransferGTFS> transferts = new ArrayList<>();
 		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {

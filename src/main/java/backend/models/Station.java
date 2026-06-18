@@ -3,7 +3,7 @@ package backend.models;
 import java.util.ArrayList;
 
 public class Station {
-    int id;
+    String id;
     String nom;
     ArrayList<Quai> quais;
     double longitude;
@@ -11,10 +11,17 @@ public class Station {
     int posX;
     int posY;
 
-    Station(int id, String nom, double longitude, double latitude){
+    public Station(String id, String nom, double longitude, double latitude){
         this.id = id;
         this.nom = nom;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.quais = new ArrayList<>();
+    }
+
+    public String getId(){ return this.id; }
+
+    public void addQuai(Quai q){
+        this.quais.add(q);
     }
 }
