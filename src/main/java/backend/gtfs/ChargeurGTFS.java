@@ -7,12 +7,30 @@ import java.nio.file.Files;
 import java.util.*;
 import java.nio.file.Path;
 
-import static java.lang.Boolean.parseBoolean;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
 public class ChargeurGTFS {
 	private static final int TYPE_METRO = 1;
+
+	private String[] splitCsv(String line) {
+		List<String> fields = new ArrayList<>();
+		StringBuilder sb = new StringBuilder();
+		boolean inQuotes = false;
+		for (int i = 0; i < line.length(); i++) {
+			char ch = line.charAt(i);
+			if (ch == '"') {
+				inQuotes = !inQuotes;
+			} else if (ch == ',' && !inQuotes) {
+				fields.add(sb.toString());
+				sb.setLength(0);
+			} else {
+				sb.append(ch);
+			}
+		}
+		fields.add(sb.toString());
+		return fields.toArray(new String[0]);
+	}
 
 	public Map<String, RouteGTFS> lireRoutes(Path chemin){
 		Map<String, RouteGTFS> routes = new HashMap<>();
@@ -24,7 +42,7 @@ public class ChargeurGTFS {
 					firstLine = false;
 					continue;
 				}
-				String[] c = line.split(",");
+				String[] c = splitCsv(line);
 				if (parseInt(c[5]) == TYPE_METRO){
 					routes.put(c[0], new RouteGTFS(c[0], c[2], parseInt(c[5]), c[7]));
 				}
@@ -45,9 +63,9 @@ public class ChargeurGTFS {
 				firstLine = false;
 				continue;
 				}
-				String[] c = line.split(",");
+				String[] c = splitCsv(line);
 				if (routesMetro.contains(c[0])){
-					trips.put(c[2], new TripGTFS(c[2], c[0], c[1], parseInt(c[5]), c[3], parseBoolean(c[8]), parseBoolean(c[9])));
+					trips.put(c[2], new TripGTFS(c[2], c[0], c[1], parseInt(c[5]), c[3], parseInt(c[8]) == 1, parseInt(c[9]) == 1));
 				}
 			}
 		} catch (IOException e) {
@@ -66,8 +84,11 @@ public class ChargeurGTFS {
 					firstLine = false;
 					continue;
 				}
-				String[] c = line.split(",");
-				stops.put(c[0], new StopGTFS(c[0], c[2], parseDouble(c[4]), parseDouble(c[5]), parseInt(c[6]), parseInt(c[8]), c[9], parseBoolean(c[10])));
+				String[] c = splitCsv(line);
+				int zoneId = c[6].trim().isEmpty() ? 0 : parseInt(c[6].trim());
+				int locationType = c[8].trim().isEmpty() ? 0 : parseInt(c[8].trim());
+				boolean wheelchair = c.length > 12 && !c[12].trim().isEmpty() && parseInt(c[12].trim()) == 1;
+				stops.put(c[0], new StopGTFS(c[0], c[2], parseDouble(c[5]), parseDouble(c[4]), zoneId, locationType, c[9], wheelchair));
 			}
 		} catch (IOException e) {
 			throw new UncheckedIOException("Lecture stops.txt impossible", e);
@@ -85,7 +106,7 @@ public class ChargeurGTFS {
 					firstLine = false;
 					continue;
 				}
-				String[] c = line.split(",");
+				String[] c = splitCsv(line);
 				StopTimeGTFS st = new StopTimeGTFS(c[0], c[3], c[1], parseInt(c[4]));
 				stopsTime.computeIfAbsent(c[0], k -> new ArrayList<>()).add(st);
 			}
@@ -108,8 +129,9 @@ public class ChargeurGTFS {
 					firstLine = false;
 					continue;
 				}
-				String[] c = line.split(",");
-				transferts.add(new TransferGTFS(c[0], c[1], parseInt(c[2]), parseInt(c[3])));
+				String[] c = splitCsv(line);
+				int minTime = (c.length > 3 && !c[3].trim().isEmpty()) ? parseInt(c[3].trim()) : 0;
+				transferts.add(new TransferGTFS(c[0], c[1], parseInt(c[2]), minTime));
 			}
 		} catch (IOException e) {
 			throw new UncheckedIOException("Lecture transfers.txt impossible", e);

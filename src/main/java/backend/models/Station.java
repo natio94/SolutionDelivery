@@ -8,8 +8,6 @@ public class Station {
     ArrayList<Quai> quais;
     double longitude;
     double latitude;
-    int posX;
-    int posY;
 
     public Station(String id, String nom, double longitude, double latitude){
         this.id = id;

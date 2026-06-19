@@ -6,7 +6,6 @@ public class Quai {
     String id;
     Station station;
     Ligne ligne;
-    int directionId;
     ArrayList<Arete> voisins;
 
     public Quai(String id, Ligne ligne, Station station){
