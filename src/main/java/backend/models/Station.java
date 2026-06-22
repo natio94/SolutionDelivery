@@ -19,6 +19,22 @@ public class Station {
 
     public String getId(){ return this.id; }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public ArrayList<Quai> getQuais() {
+        return quais;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
     public void addQuai(Quai q){
         this.quais.add(q);
     }

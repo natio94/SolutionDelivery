@@ -11,5 +11,13 @@ public class Ligne {
         this.couleur = couleur;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
+
     public String getId(){ return this.id; }
 }
