@@ -3,34 +3,70 @@ package backend.algo;
 import backend.models.Arete;
 import backend.models.Quai;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ParcoursProfondeur {
-
 
     public boolean estConnexe(List<Quai> tousLesQuais) {
         if (tousLesQuais == null || tousLesQuais.isEmpty() || tousLesQuais.size() == 1) {
             return true;
         }
 
-        Set<Quai> visites = new HashSet<>();
-
         Quai depart = tousLesQuais.getFirst();
-        dfs(depart, visites);
 
-        return visites.size() == new HashSet<>(tousLesQuais).size();
+        // Passe 1 : depuis depart, peut-on atteindre tous les quais ?
+        Set<Quai> visitesPasse1 = new HashSet<>();
+        dfs(depart, visitesPasse1);
+        if (visitesPasse1.size() != tousLesQuais.size()) return false;
+
+        // Passe 2 : sur le graphe inversé, depuis depart, peut-on encore tout atteindre ?
+        // Si oui, cela signifie que tous les quais peuvent atteindre depart dans le graphe normal.
+        Map<Quai, List<Quai>> grapheInverse = construireGrapheInverse(tousLesQuais);
+        Set<Quai> visitesPasse2 = new HashSet<>();
+        dfsInverse(depart, grapheInverse, visitesPasse2);
+        return visitesPasse2.size() == tousLesQuais.size();
     }
 
-    private void dfs(Quai courant, Set<Quai> visites) {
-        visites.add(courant);
+    // DFS itératif sur le graphe normal
+    private void dfs(Quai depart, Set<Quai> visites) {
+        Deque<Quai> pile = new ArrayDeque<>();
+        pile.push(depart);
+        while (!pile.isEmpty()) {
+            Quai courant = pile.pop();
+            if (visites.contains(courant)) continue;
+            visites.add(courant);
+            for (Arete a : courant.getVoisins()) {
+                if (!visites.contains(a.getDestination())) {
+                    pile.push(a.getDestination());
+                }
+            }
+        }
+    }
 
-        for (Arete arete : courant.getVoisins()) {
-            Quai voisin = arete.getDestination();
+    // Construit un graphe où chaque arête A→B devient B→A
+    private Map<Quai, List<Quai>> construireGrapheInverse(List<Quai> tousLesQuais) {
+        Map<Quai, List<Quai>> inverse = new HashMap<>();
+        for (Quai q : tousLesQuais) {
+            inverse.putIfAbsent(q, new ArrayList<>());
+            for (Arete a : q.getVoisins()) {
+                inverse.computeIfAbsent(a.getDestination(), k -> new ArrayList<>()).add(q);
+            }
+        }
+        return inverse;
+    }
 
-            if (!visites.contains(voisin)) {
-                dfs(voisin, visites);
+    // DFS itératif sur le graphe inversé
+    private void dfsInverse(Quai depart, Map<Quai, List<Quai>> grapheInverse, Set<Quai> visites) {
+        Deque<Quai> pile = new ArrayDeque<>();
+        pile.push(depart);
+        while (!pile.isEmpty()) {
+            Quai courant = pile.pop();
+            if (visites.contains(courant)) continue;
+            visites.add(courant);
+            for (Quai voisin : grapheInverse.getOrDefault(courant, Collections.emptyList())) {
+                if (!visites.contains(voisin)) {
+                    pile.push(voisin);
+                }
             }
         }
     }
