@@ -5,9 +5,9 @@ import backend.models.Quai;
 
 import java.util.*;
 
-public class ParcoursProfondeur {
+public class AnalyseGraph {
 
-    public boolean estConnexe(List<Quai> tousLesQuais) {
+    public static boolean estConnexe(List<Quai> tousLesQuais) {
         if (tousLesQuais == null || tousLesQuais.isEmpty() || tousLesQuais.size() == 1) {
             return true;
         }
@@ -28,7 +28,7 @@ public class ParcoursProfondeur {
     }
 
     // DFS itératif sur le graphe normal
-    private void dfs(Quai depart, Set<Quai> visites) {
+    private static void dfs(Quai depart, Set<Quai> visites) {
         Deque<Quai> pile = new ArrayDeque<>();
         pile.push(depart);
         while (!pile.isEmpty()) {
@@ -44,7 +44,7 @@ public class ParcoursProfondeur {
     }
 
     // Construit un graphe où chaque arête A→B devient B→A
-    private Map<Quai, List<Quai>> construireGrapheInverse(List<Quai> tousLesQuais) {
+    private static Map<Quai, List<Quai>> construireGrapheInverse(List<Quai> tousLesQuais) {
         Map<Quai, List<Quai>> inverse = new HashMap<>();
         for (Quai q : tousLesQuais) {
             inverse.putIfAbsent(q, new ArrayList<>());
@@ -56,7 +56,7 @@ public class ParcoursProfondeur {
     }
 
     // DFS itératif sur le graphe inversé
-    private void dfsInverse(Quai depart, Map<Quai, List<Quai>> grapheInverse, Set<Quai> visites) {
+    private static void dfsInverse(Quai depart, Map<Quai, List<Quai>> grapheInverse, Set<Quai> visites) {
         Deque<Quai> pile = new ArrayDeque<>();
         pile.push(depart);
         while (!pile.isEmpty()) {
