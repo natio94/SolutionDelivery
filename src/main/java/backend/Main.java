@@ -10,7 +10,5 @@ public class Main {
         System.out.println("Aretes chargées   : " + service.getGraphe().getAretes().size());
 
         System.out.println("Réseau connexe    : " + service.estConnexe());
-
-        System.out.println("Poids ACPM        : " + service.getPoidsACPM() + " secondes");
     }
 }
