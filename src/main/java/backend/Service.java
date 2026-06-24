@@ -35,4 +35,7 @@ public class Service {
     public boolean estConnexe() {
         return AnalyseGraph.estConnexe(new ArrayList<>(graphe.getQuais()));
     }
+
+    // --- ACPM ---
+    public Graphe getACPM(Graphe g) { return new Kruskal().getACPM(g); }
 }
