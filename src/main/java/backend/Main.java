@@ -10,5 +10,6 @@ public class Main {
         System.out.println("Aretes chargées   : " + service.getGraphe().getAretes().size());
 
         System.out.println("Réseau connexe    : " + service.estConnexe());
+
     }
 }
