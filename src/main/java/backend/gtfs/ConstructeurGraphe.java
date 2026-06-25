@@ -17,10 +17,33 @@ public class ConstructeurGraphe {
             g.addLigne(new Ligne(r.getId(), r.shortName(), r.color()));
         }
 
-        // 2. Stations (stops de type 1 = hub physique, ou stops sans parent)
+        // 2. Stops (tous pour lookup) + stop_times métro pour filtrer les stations
         Map<String, StopGTFS> stops = charg.lireStops(Path.of("Datas/stops.txt"));
+
+        // 4. Stop times groupés par tripId, triés par stop_sequence
+        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
+                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
+
+        // Collecter les IDs de stations parentes réellement utilisées par le métro
+        Set<String> metroParentIds = new HashSet<>();
+        for (List<StopTimeGTFS> arrets : stopTimesParTrip.values()) {
+            for (StopTimeGTFS st : arrets) {
+                StopGTFS stop = stops.get(st.stopId());
+                if (stop == null) continue;
+                String parentId;
+                if (stop.parentStation().isEmpty()) {
+                    parentId = stop.stopId();
+                } else {
+                    parentId = stop.parentStation();
+                }
+
+                metroParentIds.add(parentId);
+            }
+        }
+
+        // Stations filtrées : uniquement les hubs physiques du métro
         for (StopGTFS s : stops.values()) {
-            if (s.locationType() == 1 || (s.locationType() == 0 && s.parentStation().isEmpty())) {
+            if (metroParentIds.contains(s.getId())) {
                 g.addStation(new Station(s.getId(), s.name(), s.lon(), s.lat()));
             }
         }
@@ -32,10 +55,6 @@ public class ConstructeurGraphe {
             String cle = t.routeId() + "_" + t.directionId();
             unTripParRouteDir.putIfAbsent(cle, t);
         }
-
-        // 4. Stop times groupés par tripId, triés par stop_sequence
-        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
-                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
 
         // 5. Quais + Aretes metro
         for (TripGTFS trip : unTripParRouteDir.values()) {
