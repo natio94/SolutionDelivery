@@ -2,10 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.ui.controllers.GraphController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.ui.controllers.GraphController">
    <children>
-      <Pane fx:id="graphPane" layoutX="86.0" layoutY="62.0" prefHeight="287.0" prefWidth="460.0" />
+
+      <Pane fx:id="viewportPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-border-color: black; -fx-border-width: 1px;">
+         <Pane fx:id="graphPane" />
+         <ChoiceBox fx:id="lineChoice" layoutX="34.0" layoutY="736.0" prefHeight="25.0" prefWidth="120.0" />
+      </Pane>
    </children>
 </AnchorPane>
