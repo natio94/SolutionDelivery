@@ -9,8 +9,6 @@ public class Main {
         System.out.println("Quais chargés     : " + service.getGraphe().getQuais().size());
         System.out.println("Aretes chargées   : " + service.getGraphe().getAretes().size());
 
-        System.out.println("Réseau connexe    : " + service.estConnexe());
-
         System.out.println("Réseau connexe (quais)    : " + service.estConnexe());
         System.out.println("Réseau connexe (stations) : " + service.estConnexeStations());
 
