@@ -11,5 +11,8 @@ public class Main {
 
         System.out.println("Réseau connexe    : " + service.estConnexe());
 
+        System.out.println("Réseau connexe (quais)    : " + service.estConnexe());
+        System.out.println("Réseau connexe (stations) : " + service.estConnexeStations());
+
     }
 }
