@@ -1,14 +1,10 @@
-package backend.algo;
+package backend;
 
-import backend.models.Graphe;
-import backend.models.Arete;
-import backend.models.Ligne;
-import backend.models.Quai;
-import backend.models.Station;
-import backend.models.DistanceAntecedants;
-import org.junit.jupiter.api.Test;
+import backend.algo.Dijkstra;
+import backend.models.*;
 
 import java.util.*;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -103,5 +99,16 @@ class DijkstraTest {
 		assertEquals(results.get(q4).getDistance(), 6);
 		assertEquals(results.get(q5).getDistance(), 9);
 		assertEquals(results.get(q6).getDistance(), 12);
+	}
+
+	@Test
+	void checkNoInfiniteLoop() {
+		System.out.println("Dijkstra quai infinite loop check through elapsed time");
+		Service service = new Service();
+		long startTime = System.nanoTime();
+		Quai republique = service.getGraphe().getStationParNom("République").getQuais().get(0);
+		Dijkstra.getDistanceAntecedantsMap(service.getGraphe(), republique);
+		long stopTime = System.nanoTime();
+		System.out.println("Dijkstra quai elapsed time: " + (stopTime - startTime));
 	}
 }
