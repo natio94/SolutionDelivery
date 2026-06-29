@@ -37,7 +37,7 @@ public class Service {
     }
 
     // --- ACPM ---
-    public Graphe getACPM(Graphe g) { return new Kruskal().getACPM(g); }
+    public Graphe getACPM() { return new Kruskal().getACPM(this.graphe); }
 
     public boolean estConnexeStations() {
         return AnalyseGraph.estConnexeStations(graphe.getStations());

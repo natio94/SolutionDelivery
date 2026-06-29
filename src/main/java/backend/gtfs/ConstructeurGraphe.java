@@ -20,7 +20,7 @@ public class ConstructeurGraphe {
         // 2. Stops (tous pour lookup) + stop_times métro pour filtrer les stations
         Map<String, StopGTFS> stops = charg.lireStops(Path.of("Datas/stops.txt"));
 
-        // 4. Stop times groupés par tripId, triés par stop_sequence
+        // 2 suite. Stop times groupés par tripId, triés par stop_sequence
         Map<String, List<StopTimeGTFS>> stopTimesParTrip =
                 charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
 
