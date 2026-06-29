@@ -1,9 +1,6 @@
 package backend.algo;
 
-import backend.models.Graphe;
-import backend.models.Arete;
-import backend.models.Quai;
-import backend.models.DistanceAntecedants;
+import backend.models.*;
 
 import java.util.*;
 
@@ -24,14 +21,14 @@ public class Dijkstra {
 				return distanceAntecedantsMap.get(quai1).getDistance().compareTo(distanceAntecedantsMap.get(quai2).getDistance());
 			}
 	 	};
-		TreeSet<Quai> unvisited = new TreeSet<>(compareByDistance);
+		PriorityQueue<Quai> unvisited = new PriorityQueue<>(compareByDistance);
 		for (var quai : graph.getQuais()) {
 			unvisited.add(quai);
 		}
 
 		// iteration
 		while (!unvisited.isEmpty()) {
-			Quai currentQuai = unvisited.first();
+			Quai currentQuai = unvisited.poll();
 			for (var arete : currentQuai.getVoisins()) {
 				Quai voisin = arete.getDestination();
 				if (distanceAntecedantsMap.get(voisin) == null) {
@@ -58,8 +55,6 @@ public class Dijkstra {
 					distanceAntecedantsMap.get(voisin).getAntecedants().add(antecedant);
 				}
 			}
-
-			unvisited.remove(currentQuai);
 		}
 
 		return distanceAntecedantsMap;
