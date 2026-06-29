@@ -1,6 +1,7 @@
 package backend.models;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Station {
     String id;
@@ -37,5 +38,13 @@ public class Station {
 
     public void addQuai(Quai q){
         this.quais.add(q);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Station autre = (Station) o;
+        return Objects.equals(this.id, autre.id);
     }
 }
