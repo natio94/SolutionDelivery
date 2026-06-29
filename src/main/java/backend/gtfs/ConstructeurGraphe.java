@@ -48,12 +48,22 @@ public class ConstructeurGraphe {
             }
         }
 
-        // 3. Un seul trip représentatif par (routeId, directionId)
+        // 3. Un trip représentatif par (routeId, directionId, terminus) pour couvrir toutes les branches
         Map<String, TripGTFS> trips = charg.lireTrips(Path.of("Datas/trips.txt"), routes.keySet());
         Map<String, TripGTFS> unTripParRouteDir = new HashMap<>();
         for (TripGTFS t : trips.values()) {
-            String cle = t.routeId() + "_" + t.directionId();
-            unTripParRouteDir.putIfAbsent(cle, t);
+            List<StopTimeGTFS> arrets = stopTimesParTrip.get(t.tripId());
+            if (arrets == null || arrets.isEmpty()) continue;
+            String terminus = arrets.getLast().stopId();
+            String cle = t.routeId() + "_" + t.directionId() + "_" + terminus;
+            TripGTFS actuel = unTripParRouteDir.get(cle);
+            if (actuel == null) {
+                unTripParRouteDir.put(cle, t);
+            } else {
+                int nbNouv = arrets.size();
+                int nbActuel = stopTimesParTrip.getOrDefault(actuel.tripId(), List.of()).size();
+                if (nbNouv > nbActuel) unTripParRouteDir.put(cle, t);
+            }
         }
 
         // 5. Quais + Aretes metro
