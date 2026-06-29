@@ -8,7 +8,7 @@ public class MeilleurChemin {
 	public static List<Quai> MeilleurChemin(Map<Quai, DistanceAntecedants> distanceAntecedantsMap, Quai origin, Quai destination) {
 		List<Quai> path = new ArrayList<>();
 		Quai current_quai = destination;
-		while (current_quai != origin) {
+		while (!current_quai.equals(origin)) {
 			path.add(current_quai);
 			current_quai = distanceAntecedantsMap.get(current_quai).getAntecedants().get(0);
 		}
