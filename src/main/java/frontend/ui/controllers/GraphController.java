@@ -3,16 +3,6 @@ package frontend.ui.controllers;
 import backend.Service;
 import backend.models.*;
 import frontend.ui.views.*;
-<<<<<<< Updated upstream
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
-
-=======
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,16 +19,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
->>>>>>> Stashed changes
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-<<<<<<< Updated upstream
-import java.util.function.BiFunction;
-=======
 import java.util.stream.Collectors;
->>>>>>> Stashed changes
 
 public class GraphController {
 
@@ -51,23 +36,6 @@ public class GraphController {
 	@FXML
 	private ChoiceBox<String> lineChoice;
 
-<<<<<<< Updated upstream
-	private static final double VIEWPORT_WIDTH = 1000;
-	private static final double VIEWPORT_HEIGHT = 800;
-	private static final double CANVAS_SCALE_FACTOR = 3.0;
-	private static final double PANE_WIDTH = VIEWPORT_WIDTH * CANVAS_SCALE_FACTOR;
-	private static final double PANE_HEIGHT = VIEWPORT_HEIGHT * CANVAS_SCALE_FACTOR;
-	private static final double PADDING = 60;
-	private static final double ZOOM_TRESHOLD =1.5;
-
-
-	private Service service = new Service();
-	private final Map<String, StationView> stationNodes = new HashMap<>();
-	private final Map<String,String> lineNameToId = new HashMap<>();
-	private final Map<String, AreteView> arreteViews = new HashMap<>();
-	private PanZoomHandler	panZoomHandler;
-	private Graphe graphe;
-=======
 	@FXML
 	private TextField departField;
 
@@ -115,47 +83,10 @@ public class GraphController {
 	private PanZoomHandler panZoomHandler;
 	private Graphe graphe;
 	private final List<String> historique = new ArrayList<>();
->>>>>>> Stashed changes
 
 
 	public void initialize() {
 
-<<<<<<< Updated upstream
-		graphPane.setPrefSize(PANE_WIDTH, PANE_HEIGHT);
-		graphPane.setMinSize(PANE_WIDTH,PANE_HEIGHT);
-		graphPane.setStyle("-fx-background-color: #F0F0F0; -fx-border-color: black; -fx-border-width: 1px;");
-
-		viewportPane.setPrefSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		viewportPane.setMinSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		viewportPane.setMaxSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		Rectangle clip = new Rectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		viewportPane.setClip(clip);
-
-		this.graphe= service.getGraphe();
-		panZoomHandler = new PanZoomHandler(graphPane);
-		panZoomHandler.addZoomListener(this::onZoomChanged);
-		renderGraphe(this.graphe);
-
-		double initialZoom = VIEWPORT_WIDTH / PANE_WIDTH;
-		panZoomHandler.setZoomFactor(initialZoom);
-
-
-		graphe.getLignes().forEach((ligne) -> lineNameToId.put(ligne.getNom(), ligne.getId()));
-
-		lineChoice.getItems().add("Aucune lignes");
-		lineChoice.setValue("Aucune lignes");
-		graphe.getLignes().stream()
-				.sorted(Comparator.comparing(Ligne::getId))
-				.forEach(ligne -> lineChoice.getItems().add(ligne.getNom()));
-		lineChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {highlightLine(lineNameToId.get(newValue));});
-
-		//highlightLine("IDFM:C01377");
-
-	}
-
-	private void onZoomChanged(double zoomFactor) {
-		System.out.println(	"Zoom factor: " + zoomFactor);
-=======
 		viewportPane.widthProperty().addListener((o, a, b) -> ajusterClip());
 		viewportPane.heightProperty().addListener((o, a, b) -> ajusterClip());
 
@@ -425,16 +356,11 @@ public class GraphController {
 	// ---------- Rendu de la carte ----------
 
 	private void onZoomChanged(double zoomFactor) {
->>>>>>> Stashed changes
 		if (zoomFactor < ZOOM_TRESHOLD) {
 			stationNodes.values().forEach(node -> node.setLabelVisible(false));
 		} else {
 			stationNodes.values().forEach(node -> node.setLabelVisible(true));
 		}
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	}
 
 	public void addSommet(Station station, double x, double y) {
@@ -455,57 +381,22 @@ public class GraphController {
 			return;
 		}
 
-<<<<<<< Updated upstream
-		AreteView arrete;
-		if (arete.getType()	!= Arete.Type.pied)
-			{
-			arrete = new AreteView(
-=======
 		if (arete.getType() != Arete.Type.pied) {
 			AreteView arrete = new AreteView(
->>>>>>> Stashed changes
 					arete,
 					nodeA.getCenterX(), nodeA.getCenterY(),
 					nodeB.getCenterX(), nodeB.getCenterY(),
 					arete.getLigne()
 			);
 
-<<<<<<< Updated upstream
-				String key = arreteKey(source.getId(), destination.getId());
-				arreteViews.put(key, arrete);
-				graphPane.getChildren().add(0, arrete);
-		}
-
-=======
 			String key = arreteKey(source.getId(), destination.getId());
 			arreteViews.put(key, arrete);
 			graphPane.getChildren().add(0, arrete);
 		}
->>>>>>> Stashed changes
 	}
 
 	private void handlePopup(StationView node) {
 		StationPopup popup = node.getPopup();
-<<<<<<< Updated upstream
-		System.out.println(popup);
-		if(node.getPopup() == null || !node.getPopup().isVisible()) {
-			System.out.println("Clic sur : " + node.getStation().getNom());
-			if (popup == null) {
-				popup = new StationPopup(node.getStation(),node.getCenterX(), node.getCenterY());
-
-				graphPane.getChildren().add(popup);
-
-			}
-			popup.setVisible(true);
-		}
-		else{
-			if (popup != null) {
-				popup.setVisible(false);
-			}
-		}
-		node.setPopup(popup);
-		System.out.println(node.getPopup());
-=======
 		if (node.getPopup() == null || !node.getPopup().isVisible()) {
 			if (popup == null) {
 				popup = new StationPopup(node.getStation(), node.getCenterX(), node.getCenterY());
@@ -516,7 +407,6 @@ public class GraphController {
 			popup.setVisible(false);
 		}
 		node.setPopup(popup);
->>>>>>> Stashed changes
 	}
 
 	public void renderGraphe(Graphe graphe) {
@@ -525,11 +415,7 @@ public class GraphController {
 		arreteViews.clear();
 
 		GeoProjector projector = GeoProjector.fitTo(
-<<<<<<< Updated upstream
-				graphe.getStations(), PANE_WIDTH, PANE_HEIGHT, PADDING
-=======
 				graphe.getStations(), paneWidth, paneHeight, PADDING
->>>>>>> Stashed changes
 		);
 
 		for (Station station : graphe.getStations()) {
@@ -542,10 +428,6 @@ public class GraphController {
 		}
 	}
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	public void highlightPath(List<String> quaiIdsOrdonnes) {
 		stationNodes.values().forEach(n -> n.setSelected(false));
 		arreteViews.values().forEach(e -> e.setHighlighted(false));
@@ -572,16 +454,6 @@ public class GraphController {
 		return sourceQuaiId + "->" + destQuaiId;
 	}
 
-<<<<<<< Updated upstream
-
-	public void highlightLine(String line) {
-		stationNodes.values().forEach(n -> n.setSelected(false));
-		arreteViews.values().forEach(e -> e.setHighlighted(e.getArete().getLigne() != null && e.getArete().getLigne().getId().equals(line)));
-
-	}
-
-}
-=======
 	public void highlightLine(String line) {
 		stationNodes.values().forEach(n -> n.setSelected(false));
 		arreteViews.values().forEach(e -> e.setHighlighted(
@@ -589,4 +461,3 @@ public class GraphController {
 	}
 
 }
->>>>>>> Stashed changes
