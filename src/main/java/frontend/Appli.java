@@ -27,8 +27,12 @@ public class Appli extends Application {
 	}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
 	public static void main(String[] args) {
 		launch(args);

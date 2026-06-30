@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< Updated upstream
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,3 +13,102 @@
       </Pane>
    </children>
 </AnchorPane>
+=======
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0" styleClass="racine"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontend.ui.controllers.GraphController">
+
+   <!-- ===== En-tête ===== -->
+   <top>
+      <HBox styleClass="entete-haut" alignment="CENTER_LEFT" spacing="14">
+         <padding>
+            <Insets top="12" right="20" bottom="12" left="20"/>
+         </padding>
+
+         <ImageView fitHeight="34" fitWidth="34" preserveRatio="true">
+            <image>
+               <Image url="@images/logo.png"/>
+            </image>
+         </ImageView>
+         <Label text="CARPE" styleClass="entete-titre"/>
+
+         <Region HBox.hgrow="ALWAYS"/>
+
+         <Button text="≡" styleClass="entete-menu"/>
+      </HBox>
+   </top>
+
+   <!-- ===== Barre latérale ===== -->
+   <left>
+      <VBox styleClass="barre-laterale" prefWidth="260.0" spacing="22">
+         <padding>
+            <Insets top="20" right="18" bottom="20" left="18"/>
+         </padding>
+
+         <VBox styleClass="bloc-lateral" spacing="10">
+            <Label text="Problèmes" styleClass="bloc-titre"/>
+            <Label text="Signalement des incidents RATP — bientôt disponible." styleClass="bloc-note" wrapText="true"/>
+         </VBox>
+
+         <VBox styleClass="bloc-lateral" spacing="10" VBox.vgrow="ALWAYS">
+            <Label text="Historique" styleClass="bloc-titre"/>
+            <VBox fx:id="historiqueBox" spacing="8"/>
+            <Label fx:id="historiqueVideLabel" text="Vos trajets récents apparaîtront ici." styleClass="bloc-note" wrapText="true"/>
+         </VBox>
+      </VBox>
+   </left>
+
+   <!-- ===== Zone centrale : recherche + carte ===== -->
+   <center>
+      <VBox spacing="0">
+
+         <VBox styleClass="zone-recherche" spacing="10">
+            <padding>
+               <Insets top="18" right="24" bottom="14" left="24"/>
+            </padding>
+
+            <HBox spacing="14" alignment="CENTER_LEFT">
+
+               <VBox alignment="CENTER" spacing="2" minWidth="14">
+                  <Label text="○" styleClass="repere-depart"/>
+                  <Region styleClass="repere-trait" minHeight="22" maxHeight="22"/>
+                  <Label text="📍" styleClass="repere-arrivee"/>
+               </VBox>
+
+               <VBox spacing="8" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="departField" promptText="Choisir un point de départ..." styleClass="champ-recherche"/>
+                  <TextField fx:id="arriveField" promptText="Choisir une destination..." styleClass="champ-recherche"/>
+               </VBox>
+
+               <Button fx:id="echangerButton" text="⇅" styleClass="bouton-echanger"/>
+               <Button fx:id="rechercherButton" text="Calculer" styleClass="bouton-principal"/>
+
+               <VBox alignment="CENTER" spacing="2">
+                  <Label text="Ligne" styleClass="champ-mini-label"/>
+                  <ChoiceBox fx:id="lineChoice" maxWidth="170" prefWidth="170"/>
+               </VBox>
+            </HBox>
+
+            <Label fx:id="erreurLabel" styleClass="erreur" visible="false" managed="false" wrapText="true"/>
+
+            <HBox fx:id="resultatBox" styleClass="carte-resultat" spacing="14" alignment="CENTER_LEFT" visible="false" managed="false">
+               <Label fx:id="resultatTempsLabel" styleClass="resultat-temps"/>
+               <Label fx:id="resultatDetailLabel" styleClass="resultat-detail" wrapText="true" HBox.hgrow="ALWAYS"/>
+            </HBox>
+         </VBox>
+
+         <Pane fx:id="viewportPane" styleClass="viewport" VBox.vgrow="ALWAYS">
+            <Pane fx:id="graphPane"/>
+         </Pane>
+
+      </VBox>
+   </center>
+
+</BorderPane>
+>>>>>>> Stashed changes
