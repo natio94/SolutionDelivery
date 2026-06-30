@@ -1,25 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.example</groupId>
     <artifactId>SolutionDelivery</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<<<<<<< Updated upstream
-        <maven.compiler.source>17</maven.compiler.source>
-        <javafx.version>17.0.2</javafx.version>
-=======
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <javafx.version>21.0.2</javafx.version>
->>>>>>> Stashed changes
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -31,31 +20,21 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-<<<<<<< Updated upstream
-=======
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
->>>>>>> Stashed changes
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-<<<<<<< Updated upstream
-                <version>3.8.1</version>
-                <configuration>
-                    <release>17</release>
-=======
                 <version>3.11.0</version>
                 <configuration>
                     <release>21</release>
->>>>>>> Stashed changes
                 </configuration>
             </plugin>
             <plugin>
@@ -64,11 +43,7 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-<<<<<<< Updated upstream
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
-=======
-                        <!-- Lancer avec : mvn clean javafx:run -->
->>>>>>> Stashed changes
+                        <!--  Lancer avec : mvn clean javafx:run  -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>frontend.Appli</mainClass>
@@ -78,9 +53,4 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< Updated upstream
 </project>
-=======
-
-</project>
->>>>>>> Stashed changes
