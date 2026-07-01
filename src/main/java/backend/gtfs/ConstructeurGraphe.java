@@ -12,17 +12,17 @@ public class ConstructeurGraphe {
         Graphe g = new Graphe();
 
         // 1. Lignes
-        Map<String, RouteGTFS> routes = charg.lireRoutes(Path.of("Datas/routes.txt"));
+        Map<String, RouteGTFS> routes = charg.lireRoutes(Path.of("src/main/resources/Datas/routes.txt"));
         for (RouteGTFS r : routes.values()) {
             g.addLigne(new Ligne(r.getId(), r.shortName(), r.color()));
         }
 
         // 2. Stops (tous pour lookup) + stop_times métro pour filtrer les stations
-        Map<String, StopGTFS> stops = charg.lireStops(Path.of("Datas/stops.txt"));
+        Map<String, StopGTFS> stops = charg.lireStops(Path.of("src/main/resources/Datas/stops.txt"));
 
         // 2 suite. Stop times groupés par tripId, triés par stop_sequence
         Map<String, List<StopTimeGTFS>> stopTimesParTrip =
-                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
+                charg.lireStopsTime(Path.of("src/main/resources/Datas/stop_times_metro.txt"));
 
         // Collecter les IDs de stations parentes réellement utilisées par le métro
         Set<String> metroParentIds = new HashSet<>();
@@ -49,7 +49,7 @@ public class ConstructeurGraphe {
         }
 
         // 3. Un trip représentatif par (routeId, directionId, terminus) pour couvrir toutes les branches
-        Map<String, TripGTFS> trips = charg.lireTrips(Path.of("Datas/trips.txt"), routes.keySet());
+        Map<String, TripGTFS> trips = charg.lireTrips(Path.of("src/main/resources/Datas/trips.txt"), routes.keySet());
         Map<String, TripGTFS> unTripParRouteDir = new HashMap<>();
         for (TripGTFS t : trips.values()) {
             List<StopTimeGTFS> arrets = stopTimesParTrip.get(t.tripId());
@@ -106,7 +106,7 @@ public class ConstructeurGraphe {
         }
 
         // 6. Aretes de correspondance (a pied entre lignes)
-        List<TransferGTFS> transfers = charg.lireTransfers(Path.of("Datas/transfers.txt"));
+        List<TransferGTFS> transfers = charg.lireTransfers(Path.of("src/main/resources/Datas/transfers.txt"));
         for (TransferGTFS t : transfers) {
             Quai quaiFrom = g.getQuai(t.fromStopId());
             Quai quaiTo   = g.getQuai(t.toStopId());
