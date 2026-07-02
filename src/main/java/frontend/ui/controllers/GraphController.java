@@ -234,11 +234,11 @@ public class GraphController {
 		javafx.concurrent.Task<ItineraireResultat> tache = new javafx.concurrent.Task<>() {
 			@Override
 			protected ItineraireResultat call() {
-				Quai origineQuai = depart.getQuais().getFirst();
+				Quai origineQuai = depart.getQuais().get(0);
 				Map<Quai, DistanceAntecedants> distances =
 						backend.algo.Dijkstra.getDistanceAntecedantsMap(graphe, origineQuai);
 
-				Quai destQuai = arrivee.getQuais().getFirst();
+				Quai destQuai = arrivee.getQuais().get(0);
 				DistanceAntecedants infoDestination = distances.get(destQuai);
 				if (infoDestination == null) {
 					return null; // aucun chemin trouve
@@ -436,8 +436,8 @@ public class GraphController {
 	public void highlightPath(List<String> quaiIdsOrdonnes) {
 		Map<StationView,List<Arete>> correspMap = new HashMap<>();
 		resetHighlight();
-		Quai quaiDebut = graphe.getQuai(quaiIdsOrdonnes.getFirst());
-		Quai quaiFin = graphe.getQuai(quaiIdsOrdonnes.getLast());
+		Quai quaiDebut = graphe.getQuai(quaiIdsOrdonnes.get(0));
+		Quai quaiFin = graphe.getQuai(quaiIdsOrdonnes.get(quaiIdsOrdonnes.size() - 1));
 
 		for (int i = 1; i < quaiIdsOrdonnes.size(); i++) {
 			String quaiId = quaiIdsOrdonnes.get(i);
@@ -489,13 +489,13 @@ public class GraphController {
 	}
 
 	public String parseCorresp(List<Arete> corresps){
-		Quai depart=corresps.getFirst().getSource();
-		Quai arrive=corresps.getLast().getDestination();
+		Quai depart=corresps.get(0).getSource();
+		Quai arrive=corresps.get(corresps.size()-1).getDestination();
 
 		int poids = corresps.stream().mapToInt(Arete::getPoid).sum();
 
 		if (poids>=60)poids=Math.round(poids / 60f);
-		return depart.getLigne().getNom()+"->"+arrive.getLigne().getNom()+": "+poids+"s";
+		return depart.getLigne().getNom()+"->"+arrive.getLigne().getNom()+": "+poids+"min";
 	}
 
 	public void resetHighlight(){
