@@ -17,30 +17,30 @@ public class StationView extends Pane {
 	private Consumer<StationView> onClickHandler;
 	private boolean selected = false;
 	private static final double RADIUS = 3.0;
-	private static final Color DEFAULT_COLOR = Color.web("#E10613",0.5);
-	private static final Color HOVER_COLOR = Color.web("#FF8C8C",0.5);
+	private static final Color DEFAULT_COLOR = Color.web("#e6ed0e", 0.5);
 	private static final Color SELECTED_COLOR = Color.GOLD;
+	private Color color = DEFAULT_COLOR;
 	private StationPopup popup;
-	private boolean labelVisibleByZoom;
+	private boolean labelVisibleByZoom = false;
+	private boolean start = false;
+	private boolean end = false;
 
 	public StationView(Station station, double x, double y) {
 		this.station = station;
-
-
 		circle = new Circle(RADIUS);
 		circle.setFill(DEFAULT_COLOR);
-		circle.setStroke(Color.web("000000",0.5));
+		circle.setStroke(Color.web("000000", 0.5));
 		circle.setCenterX(RADIUS);
 		circle.setCenterY(RADIUS);
-
 		label = new Label(station.getNom());
 		label.setMouseTransparent(true);
-		label.setLayoutX(RADIUS * 2 + 8);
-		label.setLayoutY(RADIUS - 10);
+		label.setLayoutX(RADIUS * 2 + 4);
+		label.setLayoutY(-6);
 		label.setVisible(false);
+
 		getChildren().addAll(circle, label);
 
-		setPrefSize(200, RADIUS * 2 + 10);
+		setPrefSize(RADIUS * 2, RADIUS * 2);
 		setLayoutX(x - RADIUS);
 		setLayoutY(y - RADIUS);
 
@@ -53,13 +53,13 @@ public class StationView extends Pane {
 
 	private void setupInteractions() {
 		circle.setOnMouseEntered(e -> {
-			if (!selected) circle.setFill(HOVER_COLOR);
+			if (!selected) circle.setFill(lightenColor(color));
 			setCursor(Cursor.HAND);
 			label.setVisible(true);
 		});
 
 		circle.setOnMouseExited(e -> {
-			if (!selected) circle.setFill(DEFAULT_COLOR);
+			if (!selected) circle.setFill(color);
 			setCursor(Cursor.DEFAULT);
 			label.setVisible(labelVisibleByZoom);
 		});
@@ -81,14 +81,13 @@ public class StationView extends Pane {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-		circle.setFill(selected ? SELECTED_COLOR : DEFAULT_COLOR);
+		circle.setFill(selected ? SELECTED_COLOR : color);
 	}
 
 	public void setLabelVisible(boolean visible) {
 		this.labelVisibleByZoom = visible;
 		label.setVisible(visible);
 	}
-
 
 	public boolean isSelected() {
 		return selected;
@@ -108,5 +107,39 @@ public class StationView extends Pane {
 
 	public void setPopup(StationPopup popup) {
 		this.popup = popup;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
+		color = start ? Color.GREEN : DEFAULT_COLOR;
+		circle.setFill(color);
+		circle.setRadius(start ? RADIUS * 1.5 : RADIUS);
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+		color = end ? Color.RED : DEFAULT_COLOR;
+		circle.setFill(color);
+		circle.setRadius(end ? RADIUS * 1.5 : RADIUS);
+	}
+
+	public void setCorresp(String corresp){
+		if(popup!=null) {
+			if (!corresp.isBlank()) {
+				popup.setCorresp(corresp);
+				circle.setStrokeWidth(2);
+				circle.setStroke(Color.web("000000"));
+				popup.setVisible(true);
+			} else {
+				circle.setStrokeWidth(1);
+				circle.setStroke(Color.web("000000", 0.5));
+				popup.setVisible(false);
+				popup.setCorresp("");
+			}
+		}
+
+	}
+	private Color lightenColor(Color c) {
+		return c.interpolate(Color.WHITE, 0.4);
 	}
 }
