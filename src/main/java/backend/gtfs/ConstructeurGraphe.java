@@ -2,7 +2,6 @@ package backend.gtfs;
 
 import backend.models.*;
 
-import java.nio.file.Path;
 import java.util.*;
 
 public class ConstructeurGraphe {
@@ -12,30 +11,59 @@ public class ConstructeurGraphe {
         Graphe g = new Graphe();
 
         // 1. Lignes
-        Map<String, RouteGTFS> routes = charg.lireRoutes(Path.of("Datas/routes.txt"));
+        Map<String, RouteGTFS> routes = charg.lireRoutes(this.getClass().getResourceAsStream("/datas/routes.txt"));
         for (RouteGTFS r : routes.values()) {
             g.addLigne(new Ligne(r.getId(), r.shortName(), r.color()));
         }
 
-        // 2. Stations (stops de type 1 = hub physique, ou stops sans parent)
-        Map<String, StopGTFS> stops = charg.lireStops(Path.of("Datas/stops.txt"));
+        // 2. Stops (tous pour lookup) + stop_times métro pour filtrer les stations
+        Map<String, StopGTFS> stops = charg.lireStops(this.getClass().getResourceAsStream("/datas/stops.txt"));
+
+        // 2 suite. Stop times groupés par tripId, triés par stop_sequence
+        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
+                charg.lireStopsTime(this.getClass().getResourceAsStream("/datas/stop_times_metro.txt"));
+
+        // Collecter les IDs de stations parentes réellement utilisées par le métro
+        Set<String> metroParentIds = new HashSet<>();
+        for (List<StopTimeGTFS> arrets : stopTimesParTrip.values()) {
+            for (StopTimeGTFS st : arrets) {
+                StopGTFS stop = stops.get(st.stopId());
+                if (stop == null) continue;
+                String parentId;
+                if (stop.parentStation().isEmpty()) {
+                    parentId = stop.stopId();
+                } else {
+                    parentId = stop.parentStation();
+                }
+
+                metroParentIds.add(parentId);
+            }
+        }
+
+        // Stations filtrées : uniquement les hubs physiques du métro
         for (StopGTFS s : stops.values()) {
-            if (s.locationType() == 1 || (s.locationType() == 0 && s.parentStation().isEmpty())) {
+            if (metroParentIds.contains(s.getId())) {
                 g.addStation(new Station(s.getId(), s.name(), s.lon(), s.lat()));
             }
         }
 
-        // 3. Un seul trip représentatif par (routeId, directionId)
-        Map<String, TripGTFS> trips = charg.lireTrips(Path.of("Datas/trips.txt"), routes.keySet());
+        // 3. Un trip représentatif par (routeId, directionId, terminus) pour couvrir toutes les branches
+        Map<String, TripGTFS> trips = charg.lireTrips(this.getClass().getResourceAsStream("/datas/trips.txt"), routes.keySet());
         Map<String, TripGTFS> unTripParRouteDir = new HashMap<>();
         for (TripGTFS t : trips.values()) {
-            String cle = t.routeId() + "_" + t.directionId();
-            unTripParRouteDir.putIfAbsent(cle, t);
+            List<StopTimeGTFS> arrets = stopTimesParTrip.get(t.tripId());
+            if (arrets == null || arrets.isEmpty()) continue;
+            String terminus = arrets.get(arrets.size()-1).stopId();
+            String cle = t.routeId() + "_" + t.directionId() + "_" + terminus;
+            TripGTFS actuel = unTripParRouteDir.get(cle);
+            if (actuel == null) {
+                unTripParRouteDir.put(cle, t);
+            } else {
+                int nbNouv = arrets.size();
+                int nbActuel = stopTimesParTrip.getOrDefault(actuel.tripId(), List.of()).size();
+                if (nbNouv > nbActuel) unTripParRouteDir.put(cle, t);
+            }
         }
-
-        // 4. Stop times groupés par tripId, triés par stop_sequence
-        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
-                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
 
         // 5. Quais + Aretes metro
         for (TripGTFS trip : unTripParRouteDir.values()) {
@@ -77,7 +105,7 @@ public class ConstructeurGraphe {
         }
 
         // 6. Aretes de correspondance (a pied entre lignes)
-        List<TransferGTFS> transfers = charg.lireTransfers(Path.of("Datas/transfers.txt"));
+        List<TransferGTFS> transfers = charg.lireTransfers(this.getClass().getResourceAsStream("/datas/transfers.txt"));
         for (TransferGTFS t : transfers) {
             Quai quaiFrom = g.getQuai(t.fromStopId());
             Quai quaiTo   = g.getQuai(t.toStopId());
