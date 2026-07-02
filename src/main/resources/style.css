@@ -1,8 +1,4 @@
-/* =========================================================================
-   CARPE — feuille de style JavaFX
-   Disposition wireframe : header en haut, barre laterale a gauche
-   (Problemes / Historique), recherche + carte a droite.
-   ========================================================================= */
+
 
 .racine {
     -fx-background-color: #F4F1E9;
@@ -54,6 +50,47 @@
     -fx-font-size: 14px;
     -fx-padding: 6px 12px;
     -fx-cursor: hand;
+}
+
+/* ---------- Options d'itinéraires ---------- */
+
+.option-carte {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-width: 1.5px;
+    -fx-padding: 10px 12px;
+    -fx-cursor: hand;
+}
+
+.option-carte:hover {
+    -fx-border-color: #D9A441;
+    -fx-background-color: #FFFCF5;
+}
+
+.option-carte--selectionnee {
+    -fx-border-color: #D9A441;
+    -fx-border-width: 2px;
+    -fx-background-color: #FFFDF4;
+}
+
+.option-titre {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14213D;
+}
+
+.option-metrique {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: #4A4033;
+}
+
+.option-na {
+    -fx-font-size: 11px;
+    -fx-text-fill: #B0A898;
+    -fx-font-style: italic;
 }
 
 /* ---------- Barre latérale ---------- */

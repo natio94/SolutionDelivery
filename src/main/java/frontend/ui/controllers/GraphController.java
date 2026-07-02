@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GraphController {
+	// Panels
 
 	@FXML
 	private Pane graphPane;
@@ -59,6 +60,12 @@ public class GraphController {
 
 	@FXML
 	private Label resultatDetailLabel;
+
+	@FXML
+	private VBox optionsBox;
+
+	@FXML
+	private Label optionsVideLabel;
 
 	@FXML
 	private VBox historiqueBox;
@@ -271,14 +278,121 @@ public class GraphController {
 		thread.start();
 	}
 
+	// ---------- Options d'itinéraires ----------
+
+	/**
+	 * Construit et affiche les 3 cartes d'options apres un calcul.
+	 * Les deux options non implementees (CO2, moins de changements) affichent
+	 * "Bientot disponible" tant que le backend ne fournit pas les algos.
+	 */
+	private void afficherOptions(Station depart, Station arrivee,
+								 ItineraireResultat plusRapide,
+								 ItineraireResultat moinsChangements,
+								 ItineraireResultat moinsCO2) {
+
+		optionsBox.getChildren().clear();
+
+		optionsBox.getChildren().add(creerCarteOption(
+				"⚡ Plus rapide", plusRapide, depart, arrivee, true));
+		optionsBox.getChildren().add(creerCarteOption(
+				"🔄 Moins de changements", moinsChangements, depart, arrivee, false));
+		optionsBox.getChildren().add(creerCarteOption(
+				"🌿 Moins de CO₂", moinsCO2, depart, arrivee, false));
+
+		optionsVideLabel.setVisible(false);
+		optionsVideLabel.setManaged(false);
+		optionsBox.setVisible(true);
+		optionsBox.setManaged(true);
+
+		// Surligner le trajet le plus rapide par defaut
+		if (plusRapide != null) {
+			List<String> ids = plusRapide.quais().stream()
+					.map(Quai::getId).collect(Collectors.toList());
+			highlightPath(ids);
+		}
+	}
+
+	private javafx.scene.layout.VBox creerCarteOption(
+			String titre, ItineraireResultat resultat,
+			Station depart, Station arrivee,
+			boolean selectionneParDefaut) {
+
+		javafx.scene.layout.VBox carte = new javafx.scene.layout.VBox(4);
+		carte.getStyleClass().add("option-carte");
+		if (selectionneParDefaut) {
+			carte.getStyleClass().add("option-carte--selectionnee");
+		}
+
+		javafx.scene.control.Label labelTitre = new javafx.scene.control.Label(titre);
+		labelTitre.getStyleClass().add("option-titre");
+
+		carte.getChildren().add(labelTitre);
+
+		if (resultat == null) {
+			javafx.scene.control.Label labelNA = new javafx.scene.control.Label("Bientôt disponible");
+			labelNA.getStyleClass().add("option-na");
+			carte.getChildren().add(labelNA);
+		} else {
+			int minutes = Math.round(resultat.distanceTotale() / 60f);
+			// Estimation CO2 : metro electrique ~4g CO2/km par passager (source ADEME).
+			// La distance en pixels n'est pas metrique — on utilise la duree comme proxy
+			// jusqu'a ce que le backend fournisse une vraie distance en metres.
+			double co2 = Math.round(minutes * 0.4); // placeholder proportionnel au temps
+
+			javafx.scene.layout.HBox metriques = new javafx.scene.layout.HBox(10);
+
+			javafx.scene.control.Label lTemps = new javafx.scene.control.Label("🕐 " + minutes + " min");
+			lTemps.getStyleClass().add("option-metrique");
+
+			javafx.scene.control.Label lChangements = new javafx.scene.control.Label(
+					"🔁 " + resultat.nombreChangements() + " chgt");
+			lChangements.getStyleClass().add("option-metrique");
+
+			javafx.scene.control.Label lCo2 = new javafx.scene.control.Label(
+					"🌿 ~" + (int) co2 + " g");
+			lCo2.getStyleClass().add("option-metrique");
+
+			metriques.getChildren().addAll(lTemps, lChangements, lCo2);
+			carte.getChildren().add(metriques);
+
+			// Clic sur la carte = afficher ce trajet sur la carte
+			carte.setOnMouseClicked(e -> {
+				// Retirer la selection de toutes les cartes
+				optionsBox.getChildren().forEach(c ->
+						c.getStyleClass().remove("option-carte--selectionnee"));
+				carte.getStyleClass().add("option-carte--selectionnee");
+
+				List<String> ids = resultat.quais().stream()
+						.map(Quai::getId).collect(Collectors.toList());
+				highlightPath(ids);
+
+				int min = Math.round(resultat.distanceTotale() / 60f);
+				resultatTempsLabel.setText(min + " min");
+				resultatDetailLabel.setText(depart.getNom() + " → " + arrivee.getNom()
+						+ "  ·  " + resultat.nombreChangements() + " changement(s)");
+				resultatBox.setVisible(true);
+				resultatBox.setManaged(true);
+			});
+		}
+
+		return carte;
+	}
+
 	private void afficherResultat(Station depart, Station arrivee, ItineraireResultat resultat) {
 		if (resultat == null) {
 			afficherErreur("Aucun itinéraire trouvé entre ces deux stations.");
 			return;
 		}
 
-		List<String> quaiIds = resultat.quais().stream().map(Quai::getId).collect(Collectors.toList());
-		highlightPath(quaiIds);
+		// -------------------------------------------------------
+		// TODO (backend) : remplacer null par les vrais resultats
+		// quand les algos "moins de changements" et "CO2" seront prets.
+		// Signature attendue : ItineraireResultat (List<Quai>, int distanceTotale)
+		// -------------------------------------------------------
+		ItineraireResultat moinsChangements = null; // TODO: backend.algo.MoinsChangements.calculer(...)
+		ItineraireResultat moinsCO2 = null;         // TODO: backend.algo.MoinsCO2.calculer(...)
+
+		afficherOptions(depart, arrivee, resultat, moinsChangements, moinsCO2);
 
 		int minutes = Math.round(resultat.distanceTotale() / 60f);
 		resultatTempsLabel.setText(minutes + " min");
