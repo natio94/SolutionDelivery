@@ -12,7 +12,7 @@ public class AnalyseGraph {
             return true;
         }
 
-        Quai depart = tousLesQuais.getFirst();
+        Quai depart = tousLesQuais.get(0);
 
         // Passe 1 : depuis depart, peut-on atteindre tous les quais ?
         Set<Quai> visitesPasse1 = new HashSet<>();

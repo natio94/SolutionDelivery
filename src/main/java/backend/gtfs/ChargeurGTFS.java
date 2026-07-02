@@ -1,6 +1,8 @@
 package backend.gtfs;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -33,8 +35,16 @@ public class ChargeurGTFS {
 	}
 
 	public Map<String, RouteGTFS> lireRoutes(Path chemin){
+		try {
+			return lireRoutes(Files.newInputStream(chemin));
+		} catch (IOException e) {
+			throw new UncheckedIOException("Lecture routes.txt impossible", e);
+		}
+	}
+
+	public Map<String, RouteGTFS> lireRoutes(InputStream is){
 		Map<String, RouteGTFS> routes = new HashMap<>();
-		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 			String line;
 			boolean firstLine = true;
 			while ((line = br.readLine()) != null) {
@@ -54,8 +64,16 @@ public class ChargeurGTFS {
 	}
 
 	public Map<String, TripGTFS> lireTrips(Path chemin, Set<String> routesMetro) {
+		try {
+		return lireTrips(Files.newInputStream(chemin), routesMetro);}
+		catch (IOException e) {
+			throw new UncheckedIOException("Lecture trips.txt impossible", e);
+		}
+	}
+
+	public Map<String, TripGTFS> lireTrips(InputStream is, Set<String> routesMetro) {
 		Map<String, TripGTFS> trips = new HashMap<>();
-		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)){
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))){
 			String line;
 			boolean firstLine = true;
 			while ((line = br.readLine()) != null){
@@ -75,8 +93,16 @@ public class ChargeurGTFS {
 	}
 
 	public Map<String, StopGTFS> lireStops(Path chemin) {
+		try {
+			return lireStops(Files.newInputStream(chemin));
+		} catch (IOException e) {
+			throw new UncheckedIOException("Lecture stops.txt impossible", e);
+		}
+	}
+
+	public Map<String, StopGTFS> lireStops(InputStream is) {
 		Map<String, StopGTFS> stops = new HashMap<>();
-		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 			String line;
 			boolean firstLine = true;
 			while ((line = br.readLine()) != null) {
@@ -97,8 +123,16 @@ public class ChargeurGTFS {
 	}
 
 	public Map<String, List<StopTimeGTFS>> lireStopsTime(Path chemin) {
+		try {
+			return lireStopsTime(Files.newInputStream(chemin));
+		} catch (IOException e) {
+			throw new UncheckedIOException("Lecture stop_times.txt impossible", e);
+		}
+	}
+
+	public Map<String, List<StopTimeGTFS>> lireStopsTime(InputStream is) {
 		Map<String, List<StopTimeGTFS>> stopsTime = new HashMap<>();
-		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 			String line;
 			boolean firstLine = true;
 			while ((line = br.readLine()) != null) {
@@ -120,8 +154,18 @@ public class ChargeurGTFS {
 	}
 
 	public List<TransferGTFS> lireTransfers(Path chemin) {
+		try{
+			return lireTransfers(Files.newInputStream(chemin));
+		}
+		catch (IOException e) {
+			throw new UncheckedIOException("Lecture transfers.txt impossible", e);
+		}
+
+	}
+
+	public List<TransferGTFS> lireTransfers(InputStream is) {
 		List<TransferGTFS> transferts = new ArrayList<>();
-		try (BufferedReader br = Files.newBufferedReader(chemin, StandardCharsets.UTF_8)) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 			String line;
 			boolean firstLine = true;
 			while ((line = br.readLine()) != null) {
