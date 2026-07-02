@@ -66,9 +66,6 @@ public class ConstructeurGraphe {
             }
         }
 
-        // 4. Stop times groupés par tripId, triés par stop_sequence
-        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
-                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
 
         // 5. Quais + Aretes metro
         for (TripGTFS trip : unTripParRouteDir.values()) {
