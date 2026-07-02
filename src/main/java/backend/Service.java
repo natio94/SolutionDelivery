@@ -12,15 +12,35 @@ import java.util.List;
 
 public class Service {
 
-    private final Graphe graphe;
+	private static volatile Service instance = null; // Service is a lazy singleton
 
-    public Service() {
-        this.graphe = new ConstructeurGraphe().buildGraph();
+    private final Graphe graphe;
+    private final Graphe grapheCorrespondances;
+
+    private Service() {
+	ConstructeurGraphe constructeur = new ConstructeurGraphe();
+        this.graphe = constructeur.buildGraph();
+        this.grapheCorrespondances = constructeur.buildGraphCorrespondances();
+    }
+
+    // Service is a lazy singleton
+    public static Service getInstance() {
+	    if (instance == null) {
+		    synchronized (Service.class) {
+			    if (instance == null) {
+				    instance = new Service();
+			    }
+		    }
+	    }
+	    return instance;
     }
 
     // --- Accès au graphe ---
     public Graphe getGraphe() {
         return graphe;
+    }
+    public Graphe getGrapheCorrespondances() {
+        return grapheCorrespondances;
     }
 
     // --- Recherche de stations ---

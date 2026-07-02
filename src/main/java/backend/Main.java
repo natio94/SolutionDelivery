@@ -3,7 +3,7 @@ package backend;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Chargement du graphe...");
-        Service service = new Service();
+        Service service = Service.getInstance();
 
         System.out.println("Stations chargées : " + service.getGraphe().getStations().size());
         System.out.println("Quais chargés     : " + service.getGraphe().getQuais().size());
