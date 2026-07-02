@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GraphController {
+	// Panels
 
 	@FXML
 	private Pane graphPane;
