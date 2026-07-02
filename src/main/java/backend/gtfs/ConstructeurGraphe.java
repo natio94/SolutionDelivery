@@ -120,6 +120,20 @@ public class ConstructeurGraphe {
         return g;
     }
 
+    public Graphe buildGraphCorrespondances() {
+        Graphe g = buildGraph();
+
+	for (var arete : g.getAretes()) {
+		if ( arete.getSource().getLigne().equals(arete.getDestination().getLigne()) ) {
+			arete.setPoid(0);
+		} else {
+			arete.setPoid(1);
+		}
+	}
+
+	return g;
+    }
+
     private int parseTemps(String hms) {
         String[] p = hms.split(":");
         return Integer.parseInt(p[0]) * 3600 + Integer.parseInt(p[1]) * 60 + Integer.parseInt(p[2]);

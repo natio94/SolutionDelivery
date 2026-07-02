@@ -21,4 +21,8 @@ public class Arete {
     public int getPoid()         { return poid; }
     public Ligne getLigne()      { return ligne; }
     public Type getType()        { return type; }
+
+    public void setPoid(int poid) {
+	    this.poid = poid;
+    }
 }
