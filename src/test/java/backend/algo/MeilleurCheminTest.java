@@ -56,4 +56,47 @@ class MeilleurCheminTest {
 			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
 		}
 	}
+
+	@Test
+	void checkMeilleurCheminTemps() {
+		Service service = Service.getInstance();
+		System.out.println("MeilleurChemin Temp test");
+		Station republique = service.getGraphe().getStationParNom("République");
+		Station bastille = service.getGraphe().getStationParNom("Bastille");
+		Station villejuif = service.getGraphe().getStationParNom("Villejuif - Louis Aragon");
+
+		System.out.println("République - Bastille");
+		List<Quai> pathRepubliqueBastille = MeilleurChemin.MeilleurCheminTemps(republique, bastille);
+		for (var quai : pathRepubliqueBastille) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+
+		System.out.println("République - Villejuif Louis Aragon");
+		List<Quai> pathRepubliqueVillejuif = MeilleurChemin.MeilleurCheminTemps(republique, villejuif);
+		for (var quai : pathRepubliqueVillejuif) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+	}
+
+	@Test
+	void checkMeilleurCheminCorrespondances() {
+		Service service = Service.getInstance();
+		System.out.println("MeilleurChemin Correspondances test");
+
+		Station republique = service.getGraphe().getStationParNom("République");
+		Station bastille = service.getGraphe().getStationParNom("Bastille");
+		Station villejuif = service.getGraphe().getStationParNom("Villejuif - Louis Aragon");
+
+		System.out.println("République - Bastille");
+		List<Quai> pathRepubliqueBastille = MeilleurChemin.MeilleurCheminCorrespondances(republique, bastille);
+		for (var quai : pathRepubliqueBastille) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+
+		System.out.println("République - Villejuif Louis Aragon");
+		List<Quai> pathRepubliqueVillejuif = MeilleurChemin.MeilleurCheminCorrespondances(republique, villejuif);
+		for (var quai : pathRepubliqueVillejuif) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+	}
 }

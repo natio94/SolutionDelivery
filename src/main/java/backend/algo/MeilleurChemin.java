@@ -1,6 +1,8 @@
 package backend.algo;
 
 import backend.models.*;
+import backend.algo.Dijkstra;
+import backend.Service;
 
 import java.util.*;
 
@@ -47,5 +49,23 @@ public class MeilleurChemin {
 		}
 
 		return path;
+	}
+
+	public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGraphe();
+
+		Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+
+		return MeilleurChemin(distanceMap, origin, destination);
+	}
+
+	public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGrapheCorrespondances();
+
+		Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+
+		return MeilleurChemin(distanceMap, origin, destination);
 	}
 }

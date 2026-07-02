@@ -1,11 +1,8 @@
 package backend;
 
-import backend.algo.AnalyseGraph;
-import backend.algo.Kruskal;
+import backend.algo.*;
+import backend.models.*;
 import backend.gtfs.ConstructeurGraphe;
-import backend.models.Arete;
-import backend.models.Graphe;
-import backend.models.Station;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +58,12 @@ public class Service {
 
     public boolean estConnexeStations() {
         return AnalyseGraph.estConnexeStations(graphe.getStations());
+    }
+
+    public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminTemps(origin, destination);
+    }
+    public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminCorrespondances(origin, destination);
     }
 }
