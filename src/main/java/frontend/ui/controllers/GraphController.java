@@ -82,10 +82,11 @@ public class GraphController {
 	private double paneWidth;
 	private double paneHeight;
 
-	private Service service = new Service();
+	private final Service service = new Service();
 	private final Map<String, StationView> stationNodes = new HashMap<>();
 	private final Map<String, String> lineNameToId = new HashMap<>();
 	private final Map<String, AreteView> arreteViews = new HashMap<>();
+	private final Map<String, Arete> corresp = new HashMap<>();
 	private PanZoomHandler panZoomHandler;
 	private Graphe graphe;
 	private final List<String> historique = new ArrayList<>();
@@ -506,6 +507,10 @@ public class GraphController {
 			arreteViews.put(key, arrete);
 			graphPane.getChildren().add(0, arrete);
 		}
+		else{
+
+			corresp.put(arreteKey(source.getId(), destination.getId()), arete);
+		}
 	}
 
 	private void handlePopup(StationView node) {
@@ -542,9 +547,12 @@ public class GraphController {
 	}
 
 	public void highlightPath(List<String> quaiIdsOrdonnes) {
-		stationNodes.values().forEach(n -> n.setSelected(false));
-		arreteViews.values().forEach(e -> e.setHighlighted(false));
-		for (int i = 0; i < quaiIdsOrdonnes.size(); i++) {
+		Map<StationView,List<Arete>> correspMap = new HashMap<>();
+		resetHighlight();
+		Quai quaiDebut = graphe.getQuai(quaiIdsOrdonnes.get(0));
+		Quai quaiFin = graphe.getQuai(quaiIdsOrdonnes.get(quaiIdsOrdonnes.size() - 1));
+
+		for (int i = 1; i < quaiIdsOrdonnes.size(); i++) {
 			String quaiId = quaiIdsOrdonnes.get(i);
 			Quai quai = graphe.getQuai(quaiId);
 			if (quai == null) continue;
@@ -552,15 +560,35 @@ public class GraphController {
 			StationView node = stationNodes.get(quai.getStation().getId());
 			if (node != null) node.setSelected(true);
 
-			if (i > 0) {
-				String prevQuaiId = quaiIdsOrdonnes.get(i - 1);
-				AreteView arrete = arreteViews.get(arreteKey(prevQuaiId, quaiId));
-				if (arrete == null) {
-					arrete = arreteViews.get(arreteKey(quaiId, prevQuaiId));
-				}
-				if (arrete != null) arrete.setHighlighted(true);
+
+			String prevQuaiId = quaiIdsOrdonnes.get(i - 1);
+			AreteView arrete = arreteViews.get(arreteKey(prevQuaiId, quaiId));
+
+			if (arrete == null) {
+				arrete = arreteViews.get(arreteKey(quaiId, prevQuaiId));
 			}
+
+			if (arrete != null){
+				arrete.setHighlighted(true);
+			}
+			else
+				correspMap.computeIfAbsent(node, k -> new ArrayList<>()).add(corresp.get(arreteKey(prevQuaiId, quaiId)));
+
+
 		}
+		correspMap.forEach((station, arretes) -> {
+			StationPopup  popup=station.getPopup();
+			if (popup == null) {
+				popup = new StationPopup(station.getStation(), station.getCenterX(), station.getCenterY());
+				graphPane.getChildren().add(popup);
+				station.setPopup(popup);
+			}
+			String correspString = parseCorresp(arretes);
+			station.setCorresp(correspString);
+		});
+		stationNodes.get(quaiDebut.getStation().getId()).setStart(true);
+		stationNodes.get(quaiFin.getStation().getId()).setEnd(true);
+		stationNodes.get(quaiFin.getStation().getId()).setSelected(false);
 	}
 
 	private String arreteKey(String sourceQuaiId, String destQuaiId) {
@@ -568,9 +596,24 @@ public class GraphController {
 	}
 
 	public void highlightLine(String line) {
-		stationNodes.values().forEach(n -> n.setSelected(false));
+		resetHighlight();
 		arreteViews.values().forEach(e -> e.setHighlighted(
 				e.getArete().getLigne() != null && e.getArete().getLigne().getId().equals(line)));
 	}
 
+	public String parseCorresp(List<Arete> corresps){
+		Quai depart=corresps.get(0).getSource();
+		Quai arrive=corresps.get(corresps.size()-1).getDestination();
+
+		int poids = corresps.stream().mapToInt(Arete::getPoid).sum();
+
+		if (poids>=60)poids=Math.round(poids / 60f);
+		return depart.getLigne().getNom()+"->"+arrive.getLigne().getNom()+": "+poids+"min";
+	}
+
+	public void resetHighlight(){
+		stationNodes.values().forEach(n -> {n.setSelected(false); n.setStart(false);n.setEnd(false);n.setCorresp("");});
+		arreteViews.values().forEach(e -> e.setHighlighted(false));
+
+	}
 }
