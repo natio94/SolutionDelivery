@@ -1,0 +1,283 @@
+/* =========================================================================
+   CARPE — feuille de style JavaFX
+   Disposition wireframe : header en haut, barre laterale a gauche
+   (Problemes / Historique), recherche + carte a droite.
+   ========================================================================= */
+
+.racine {
+    -fx-background-color: #F4F1E9;
+}
+
+/* ---------- En-tête ---------- */
+
+.entete-haut {
+    -fx-background-color: #14213D;
+    -fx-border-color: transparent transparent #2B3D66 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.entete-sigle {
+    -fx-background-color: #D9A441;
+    -fx-text-fill: #14213D;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 50%;
+    -fx-min-width: 26px;
+    -fx-min-height: 26px;
+    -fx-max-width: 26px;
+    -fx-max-height: 26px;
+    -fx-alignment: center;
+}
+
+.entete-titre {
+    -fx-font-family: "Arial Black", "Arial Bold", "Helvetica Neue", sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F3EFE3;
+}
+
+.entete-recherche {
+    -fx-background-color: #1C2B4C;
+    -fx-background-radius: 18px;
+    -fx-border-color: #2B3D66;
+    -fx-border-radius: 18px;
+    -fx-text-fill: #F3EFE3;
+    -fx-prompt-text-fill: #5C6B91;
+    -fx-padding: 7px 14px;
+    -fx-font-size: 12px;
+}
+
+.entete-menu {
+    -fx-background-color: #1C2B4C;
+    -fx-text-fill: #F3EFE3;
+    -fx-background-radius: 6px;
+    -fx-font-size: 14px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+
+/* ---------- Barre latérale ---------- */
+
+.barre-laterale {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent #E2D9C2 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.bloc-lateral {
+    -fx-background-color: #FCFAF4;
+    -fx-background-radius: 8px;
+    -fx-border-color: #E8E1CC;
+    -fx-border-radius: 8px;
+    -fx-padding: 14px;
+}
+
+.bloc-titre {
+    -fx-font-family: "Arial Black", "Arial Bold", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14213D;
+}
+
+.bloc-note {
+    -fx-font-size: 11px;
+    -fx-text-fill: #8A8170;
+}
+
+.historique-item {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #2A2A2A;
+    -fx-font-size: 12px;
+    -fx-padding: 7px 10px;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+}
+
+.historique-item:hover {
+    -fx-background-color: #F4F1E9;
+    -fx-border-color: #D9A441;
+}
+
+.perturbation-item {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 10px;
+}
+
+.perturbation-titre {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14213D;
+}
+
+.perturbation-message {
+    -fx-font-size: 10px;
+    -fx-text-fill: #6B6354;
+}
+
+.pastille-alerte {
+    -fx-text-fill: #C8553D;
+    -fx-font-size: 9px;
+}
+
+.pastille-travaux {
+    -fx-text-fill: #D9A441;
+    -fx-font-size: 9px;
+}
+
+.pastille-normal {
+    -fx-text-fill: #3F8C8A;
+    -fx-font-size: 9px;
+}
+
+/* ---------- Zone de recherche (centre, haut) ---------- */
+
+.zone-recherche {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #E2D9C2 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.repere-depart {
+    -fx-text-fill: #3F8C8A;
+    -fx-font-size: 13px;
+}
+
+.repere-arrivee {
+    -fx-text-fill: #C8553D;
+    -fx-font-size: 13px;
+}
+
+.repere-trait {
+    -fx-border-color: transparent #B9B2A0 transparent transparent;
+    -fx-border-style: dashed;
+    -fx-border-width: 0 1.5 0 0;
+}
+
+.champ-recherche {
+    -fx-background-color: #F4F1E9;
+    -fx-background-radius: 8px;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 8px;
+    -fx-text-fill: #14213D;
+    -fx-prompt-text-fill: #9A9382;
+    -fx-padding: 9px 12px;
+    -fx-font-size: 13px;
+}
+
+.champ-recherche:focused {
+    -fx-border-color: #D9A441;
+}
+
+.liste-suggestions {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 0 0 8px 8px;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 0 0 8px 8px;
+    -fx-border-width: 0 1 1 1;
+}
+
+.liste-suggestions .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #14213D;
+    -fx-font-size: 12px;
+    -fx-padding: 7px 12px;
+}
+
+.liste-suggestions .list-cell:filled:hover,
+.liste-suggestions .list-cell:filled:selected {
+    -fx-background-color: #F4F1E9;
+}
+
+.bouton-echanger {
+    -fx-background-color: #F4F1E9;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #14213D;
+    -fx-font-size: 14px;
+    -fx-padding: 9px 12px;
+    -fx-cursor: hand;
+}
+
+.bouton-echanger:hover {
+    -fx-border-color: #D9A441;
+}
+
+.bouton-principal {
+    -fx-background-color: #D9A441;
+    -fx-text-fill: #14213D;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 9px 18px;
+    -fx-cursor: hand;
+}
+
+.bouton-principal:hover {
+    -fx-background-color: #E6B860;
+}
+
+.bouton-principal:pressed {
+    -fx-background-color: #C2902F;
+}
+
+.erreur {
+    -fx-text-fill: #C8553D;
+    -fx-font-size: 12px;
+    -fx-background-color: #FBEAE6;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 10px;
+}
+
+.carte-resultat {
+    -fx-background-color: #14213D;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 16px;
+}
+
+.resultat-temps {
+    -fx-font-family: "Arial Black", "Arial Bold", "Helvetica Neue", sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #D9A441;
+}
+
+.resultat-detail {
+    -fx-font-size: 12px;
+    -fx-text-fill: #C7CEDD;
+}
+
+.champ-mini-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #9A9382;
+}
+
+.choice-box {
+    -fx-background-color: #F4F1E9;
+    -fx-border-color: #E2D9C2;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #14213D;
+    -fx-padding: 5px;
+}
+
+.choice-box .label {
+    -fx-text-fill: #14213D;
+    -fx-font-size: 12px;
+}
+
+/* ---------- Carte ---------- */
+
+.carte-fond {
+    -fx-background-color: #F4F1E9;
+}
+
+.viewport {
+    -fx-background-color: #F4F1E9;
+}
