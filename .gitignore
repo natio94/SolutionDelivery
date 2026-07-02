@@ -8,7 +8,6 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-.idea/*
 *.iws
 *.iml
 *.ipr
@@ -42,4 +41,3 @@ build/
 /src/main/java/backend/models/
 /Datas/
 /.idea/encodings.xml
-dependency-reduced-pom.xml
