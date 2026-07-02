@@ -38,8 +38,9 @@
          </padding>
 
          <VBox styleClass="bloc-lateral" spacing="10">
-            <Label text="Problèmes" styleClass="bloc-titre"/>
-            <Label text="Signalement des incidents RATP — bientôt disponible." styleClass="bloc-note" wrapText="true"/>
+            <Label text="Itinéraires" styleClass="bloc-titre"/>
+            <Label fx:id="optionsVideLabel" text="Calculez un trajet pour voir les options." styleClass="bloc-note" wrapText="true"/>
+            <VBox fx:id="optionsBox" spacing="8" visible="false" managed="false"/>
          </VBox>
 
          <VBox styleClass="bloc-lateral" spacing="10" VBox.vgrow="ALWAYS">

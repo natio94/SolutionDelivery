@@ -35,7 +35,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>21</release>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -47,7 +47,7 @@
                         <!--  Lancer avec : mvn clean javafx:run  -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>frontend.Appli</mainClass>
+                            <mainClass>frontend.Launcher</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -68,6 +68,54 @@
               </archive>
             </configuration>
           </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>frontend.Launcher</mainClass>
+                                </transformer>
+                            </transformers>
+                            <finalName>CARPE</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.5.3</version>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <outfile>${project.build.directory}/CARPE.exe</outfile>
+                            <jar>${project.build.directory}/CARPE.jar</jar>
+                            <errTitle>App Error</errTitle>
+                            <classPath>
+                                <mainClass>frontend.Launcher</mainClass>
+                            </classPath>
+                            <jre>
+                                <minVersion>17</minVersion>
+                            </jre>
+                            <icon>${project.basedir}/src/main/resources/images/icon.ico</icon>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
