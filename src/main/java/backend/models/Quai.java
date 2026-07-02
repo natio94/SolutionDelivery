@@ -1,6 +1,7 @@
 package backend.models;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Quai {
     String id;
@@ -20,4 +21,17 @@ public class Quai {
     public Ligne getLigne()          { return this.ligne; }
     public ArrayList<Arete> getVoisins() { return this.voisins; }
     public void addVoisin(Arete a)   { this.voisins.add(a); }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Quai autre = (Quai) o;
+        return Objects.equals(this.id, autre.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
+    }
 }

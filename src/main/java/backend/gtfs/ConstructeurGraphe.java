@@ -2,6 +2,7 @@ package backend.gtfs;
 
 import backend.models.*;
 
+import java.nio.file.Path;
 import java.util.*;
 
 public class ConstructeurGraphe {
@@ -64,6 +65,10 @@ public class ConstructeurGraphe {
                 if (nbNouv > nbActuel) unTripParRouteDir.put(cle, t);
             }
         }
+
+        // 4. Stop times groupés par tripId, triés par stop_sequence
+        Map<String, List<StopTimeGTFS>> stopTimesParTrip =
+                charg.lireStopsTime(Path.of("Datas/stop_times_metro.txt"));
 
         // 5. Quais + Aretes metro
         for (TripGTFS trip : unTripParRouteDir.values()) {

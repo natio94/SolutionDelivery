@@ -22,4 +22,23 @@ public class Graphe {
     public Collection<Station> getStations() { return stations.values(); }
     public Collection<Ligne> getLignes()     { return lignes.values(); }
     public List<Arete> getAretes()           { return aretes; }
+
+    // Recherche exacte par nom (insensible à la casse)
+    public Station getStationParNom(String nom) {
+        for (Station s : stations.values()) {
+            if (s.getNom().equalsIgnoreCase(nom)) return s;
+        }
+        return null;
+    }
+    // Recherche partielle — retourne toutes les stations dont le nom contient le fragment
+    public List<Station> rechercherStations(String fragment) {
+        List<Station> resultats = new ArrayList<>();
+        String fragmentMin = fragment.toLowerCase();
+        for (Station s : stations.values()) {
+            if (s.getNom().toLowerCase().contains(fragmentMin)) {
+                resultats.add(s);
+            }
+        }
+        return resultats;
+    }
 }
