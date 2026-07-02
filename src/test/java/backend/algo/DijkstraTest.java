@@ -15,7 +15,7 @@ class DijkstraTest {
 	}
 
 	private Quai creerQuai(String id, Station station) {
-		return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station);
+		return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station, 0, 0);
 	}
 
 	@Test

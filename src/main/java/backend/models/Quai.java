@@ -8,12 +8,16 @@ public class Quai {
     Station station;
     Ligne ligne;
     ArrayList<Arete> voisins;
+    double longitude;
+    double latitude;
 
-    public Quai(String id, Ligne ligne, Station station){
+    public Quai(String id, Ligne ligne, Station station, double longitude, double latitude){
         this.id = id;
         this.ligne = ligne;
         this.voisins = new ArrayList<Arete>();
         this.station = station;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public String getId()            { return this.id; }
@@ -21,6 +25,8 @@ public class Quai {
     public Ligne getLigne()          { return this.ligne; }
     public ArrayList<Arete> getVoisins() { return this.voisins; }
     public void addVoisin(Arete a)   { this.voisins.add(a); }
+    public double getLongitude() { return longitude; }
+    public double getLatitude() { return latitude; }
 
     @Override
     public boolean equals(Object o) {

@@ -88,7 +88,7 @@ public class ConstructeurGraphe {
                 // Créer le Quai s'il n'existe pas encore
                 Quai quai = g.getQuai(st.stopId());
                 if (quai == null) {
-                    quai = new Quai(st.stopId(), ligne, station);
+                    quai = new Quai(st.stopId(), ligne, station, stop.lon(), stop.lat());
                     g.addQuai(quai);
                     station.addQuai(quai);
                 }
