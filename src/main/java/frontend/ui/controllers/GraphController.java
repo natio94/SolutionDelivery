@@ -5,14 +5,11 @@ import backend.models.*;
 import frontend.ui.views.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Popup;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +23,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GraphController {
+
+	@FXML
+	public ToggleButton toggleAPCM;
 	// Panels
+
+	@FXML
+	public Button checkConnexite;
 
 	@FXML
 	private Pane graphPane;
@@ -92,7 +95,6 @@ public class GraphController {
 	private Graphe graphe;
 	private final List<String> historique = new ArrayList<>();
 
-
 	public void initialize() {
 
 		viewportPane.widthProperty().addListener((o, a, b) -> ajusterClip());
@@ -132,6 +134,8 @@ public class GraphController {
 		rechercherButton.setOnAction(e -> calculerItineraire());
 		echangerButton.setOnAction(e -> echangerDepartArrivee());
 
+		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
+		checkConnexite.setOnAction(e -> verifConnexite());
 		chargerHistorique();
 		rafraichirHistoriqueUI();
 	}
@@ -413,6 +417,29 @@ public class GraphController {
 		}
 	}
 
+
+	public void showACPM(boolean acpm) {
+		departField.setDisable(acpm);
+		arriveField.setDisable(acpm);
+		rechercherButton.setDisable(acpm);
+		historiqueBox.setDisable(acpm);
+		echangerButton.setDisable(acpm);
+		if (acpm) {
+			renderGraphe(service.getACPM());
+		} else {
+			renderGraphe(graphe);
+		}
+
+	}
+	public void verifConnexite(){
+		if(service.estConnexe()){
+			Popup popup = new Popup();
+			popup.getContent().add(new Label("Le graphe est connexe."));
+			popup.setAutoHide(true);
+			popup.show(graphPane.getScene().getWindow());
+		}
+	}
+
 	// ---------- Historique ----------
 
 	private void ajouterAHistorique(String nomDepart, String nomArrivee) {
@@ -617,4 +644,7 @@ public class GraphController {
 		arreteViews.values().forEach(e -> e.setHighlighted(false));
 
 	}
+
+
+
 }
