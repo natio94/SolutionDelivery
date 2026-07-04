@@ -104,7 +104,6 @@ public class GraphController {
 		panZoomHandler = new PanZoomHandler(graphPane);
 		panZoomHandler.addZoomListener(this::onZoomChanged);
 
-		// On attend que le viewport ait sa vraie taille (apres layout) pour dimensionner la carte.
 		Platform.runLater(() -> {
 			paneWidth = Math.max(viewportPane.getWidth(), 800) * CANVAS_SCALE_FACTOR;
 			paneHeight = Math.max(viewportPane.getHeight(), 600) * CANVAS_SCALE_FACTOR;
@@ -145,11 +144,7 @@ public class GraphController {
 		viewportPane.setClip(clip);
 	}
 
-	/**
-	 * Branche l'autocomplétion sur un champ : un Popup flottant (et non un
-	 * noeud du layout) affiche les suggestions, ce qui evite tout souci de
-	 * visibilite/redimensionnement lie a l'imbrication des conteneurs.
-	 */
+
 	private void setupRecherche(TextField champ) {
 		ListView<String> liste = new ListView<>();
 		liste.getStyleClass().add("liste-suggestions");
@@ -206,7 +201,6 @@ public class GraphController {
 		arriveField.setText(depart);
 	}
 
-	/** Resultat local du calcul d'itineraire (pas besoin d'une classe dediee cote backend). */
 	private record ItineraireResultat(List<Quai> quais, int distanceTotale) {
 		int nombreChangements() {
 			int changements = 0;
@@ -221,7 +215,6 @@ public class GraphController {
 		}
 	}
 
-	/** Calcule et affiche le plus court chemin entre les deux stations saisies. */
 	private void calculerItineraire() {
 		afficherErreur(null);
 
@@ -237,8 +230,7 @@ public class GraphController {
 			return;
 		}
 
-		// Le calcul tourne sur un thread a part : meme s'il prend du temps,
-		// l'interface reste reactive (sinon la fenetre semble "ne pas repondre").
+
 		rechercherButton.setDisable(true);
 		rechercherButton.setText("Calcul...");
 
@@ -284,11 +276,7 @@ public class GraphController {
 
 	// ---------- Options d'itinéraires ----------
 
-	/**
-	 * Construit et affiche les 3 cartes d'options apres un calcul.
-	 * Les deux options non implementees (CO2, moins de changements) affichent
-	 * "Bientot disponible" tant que le backend ne fournit pas les algos.
-	 */
+
 	private void afficherOptions(Station depart, Station arrivee,
 								 ItineraireResultat plusRapide,
 								 ItineraireResultat moinsChangements,
@@ -297,18 +285,17 @@ public class GraphController {
 		optionsBox.getChildren().clear();
 
 		optionsBox.getChildren().add(creerCarteOption(
-				"⚡ Plus rapide", plusRapide, depart, arrivee, true));
+				"Plus rapide", plusRapide, depart, arrivee, true));
 		optionsBox.getChildren().add(creerCarteOption(
-				"🔄 Moins de changements", moinsChangements, depart, arrivee, false));
+				"Moins de changements", moinsChangements, depart, arrivee, false));
 		optionsBox.getChildren().add(creerCarteOption(
-				"🌿 Moins de CO₂", moinsCO2, depart, arrivee, false));
+				"Moins de CO₂", moinsCO2, depart, arrivee, false));
 
 		optionsVideLabel.setVisible(false);
 		optionsVideLabel.setManaged(false);
 		optionsBox.setVisible(true);
 		optionsBox.setManaged(true);
 
-		// Surligner le trajet le plus rapide par defaut
 		if (plusRapide != null) {
 			List<String> ids = plusRapide.quais().stream()
 					.map(Quai::getId).collect(Collectors.toList());
@@ -338,10 +325,7 @@ public class GraphController {
 			carte.getChildren().add(labelNA);
 		} else {
 			int minutes = Math.round(resultat.distanceTotale() / 60f);
-			// Estimation CO2 : metro electrique ~4g CO2/km par passager (source ADEME).
-			// La distance en pixels n'est pas metrique — on utilise la duree comme proxy
-			// jusqu'a ce que le backend fournisse une vraie distance en metres.
-			double co2 = Math.round(minutes * 0.4); // placeholder proportionnel au temps
+			double co2 = Math.round(minutes * 0.4);
 
 			javafx.scene.layout.HBox metriques = new javafx.scene.layout.HBox(10);
 
@@ -388,13 +372,9 @@ public class GraphController {
 			return;
 		}
 
-		// -------------------------------------------------------
-		// TODO (backend) : remplacer null par les vrais resultats
-		// quand les algos "moins de changements" et "CO2" seront prets.
-		// Signature attendue : ItineraireResultat (List<Quai>, int distanceTotale)
-		// -------------------------------------------------------
-		ItineraireResultat moinsChangements = null; // TODO: backend.algo.MoinsChangements.calculer(...)
-		ItineraireResultat moinsCO2 = null;         // TODO: backend.algo.MoinsCO2.calculer(...)
+
+		ItineraireResultat moinsChangements = null;
+		ItineraireResultat moinsCO2 = null;
 
 		afficherOptions(depart, arrivee, resultat, moinsChangements, moinsCO2);
 
@@ -481,7 +461,6 @@ public class GraphController {
 				historique.addAll(Files.readAllLines(FICHIER_HISTORIQUE));
 			}
 		} catch (IOException ignored) {
-			// pas grave si l'historique ne peut pas etre lu : on repart simplement de zero
 		}
 	}
 
@@ -491,7 +470,6 @@ public class GraphController {
 			Files.write(FICHIER_HISTORIQUE, historique,
 					StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException ignored) {
-			// pas grave si l'historique ne peut pas etre sauvegarde
 		}
 	}
 
