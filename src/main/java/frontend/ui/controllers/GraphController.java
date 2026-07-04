@@ -3,6 +3,7 @@ package frontend.ui.controllers;
 import backend.Service;
 import backend.models.*;
 import frontend.ui.views.*;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,11 +27,18 @@ import java.util.stream.Collectors;
 public class GraphController {
 
 	@FXML
-	public ToggleButton toggleAPCM;
+	private ToggleButton toggleAPCM;
+
+	@FXML
+	private Button creditsButton;
+
+	@FXML
+	private VBox creditsPane;
+
 	// Panels
 
 	@FXML
-	public Button checkConnexite;
+	private Button checkConnexite;
 
 	@FXML
 	private Pane graphPane;
@@ -135,8 +144,10 @@ public class GraphController {
 
 		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
 		checkConnexite.setOnAction(e -> verifConnexite());
+		creditsButton.setOnAction(e->showCredits());
 		chargerHistorique();
 		rafraichirHistoriqueUI();
+
 	}
 
 	private void ajusterClip() {
@@ -404,6 +415,7 @@ public class GraphController {
 		rechercherButton.setDisable(acpm);
 		historiqueBox.setDisable(acpm);
 		echangerButton.setDisable(acpm);
+		lineChoice.setDisable(acpm);
 		if (acpm) {
 			renderGraphe(service.getACPM());
 		} else {
@@ -419,6 +431,28 @@ public class GraphController {
 			popup.show(graphPane.getScene().getWindow());
 		}
 	}
+
+	public void showCredits() {
+		if (creditsPane == null) return;
+		if (creditsPane.isVisible()) {
+			TranslateTransition tt = new TranslateTransition(Duration.millis(240), creditsPane);
+			tt.setFromX(0);
+			tt.setToX(creditsPane.getWidth() > 0 ? creditsPane.getWidth() : 320);
+			tt.setOnFinished(e -> { creditsPane.setVisible(false);
+				creditsPane.setManaged(false); creditsPane.setTranslateX(0);
+			});
+			tt.play();
+		} else {
+			creditsPane.setManaged(true);
+			creditsPane.setVisible(true);
+			double w = creditsPane.getPrefWidth() > 0 ? creditsPane.getPrefWidth() : 320;
+			creditsPane.setTranslateX(w);
+			TranslateTransition tt = new TranslateTransition(Duration.millis(240), creditsPane);
+			tt.setFromX(w);
+			tt.setToX(0);
+			tt.play();
+		} }
+
 
 	// ---------- Historique ----------
 

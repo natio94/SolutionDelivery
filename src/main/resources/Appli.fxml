@@ -50,7 +50,7 @@
 
    <!-- ===== Zone centrale : recherche + carte ===== -->
    <center>
-      <VBox >
+      <VBox>
 
          <VBox spacing="10" styleClass="zone-recherche">
             <padding>
@@ -94,10 +94,26 @@
       </VBox>
    </center>
 <bottom>
-   <HBox>
+   <HBox spacing="10">
       <ToggleButton fx:id="toggleAPCM" text="Afficher l'ACPM" />
-      <Button fx:id="checkConnexite" text="Verrifier la connexité du graphe"/>
+      
+      <Button fx:id="checkConnexite" text="Verrifier la connexité du graphe" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button fx:id="creditsButton" text="Credits"/>
    </HBox>
 </bottom>
-
+   <right>
+      <VBox fx:id="creditsPane" spacing="12" visible="false" managed="false" prefWidth="320" >
+         <padding><Insets top="20" right="16" left="16" bottom="20"/></padding>
+         <HBox alignment="CENTER_RIGHT">
+            <Button text="✕" onAction="#showCredits"  />
+         </HBox>
+         <Label  text="Crédits" />
+         <Label text="CARPE - SolutionDelivery" wrapText="true"/>
+         <Label text="Développé par: Mathis BUCLON, Nathan CORNUAU, Ayuna CHAMPAIN, Karel BOU FERRAA, Noham BOULANOUAR" wrapText="true"/>
+         <Label text="Version: 1.0" />
+         <Label wrapText="true" text="Données : Portail Open Data IDFM. Format GTFS. Datée de octobre 2024. Les fichiers ont été traités et nettoyés pour garder seulement les informations liées au métro" />
+         <Region VBox.vgrow="ALWAYS" />
+      </VBox>
+   </right>
 </BorderPane>
