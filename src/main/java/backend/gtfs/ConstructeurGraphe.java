@@ -144,7 +144,7 @@ public class ConstructeurGraphe {
 		double lon2 = arete.getDestination().getLongitude();
 		double distance = distance(lat1, lat2, lon1, lon2);
 		double magicCO2 = 3.8; // CO2 emissions per traveler per km on the RATP metro service, in grams. retrieved from https://data.iledefrance-mobilites.fr/explore/dataset/emission-de-co2e-par-voyageur-kilometre-sur-le-reseau/information/
-		arete.setPoid((int) (magicCO2 * distance));
+		arete.setPoid(magicCO2 * distance);
 	}
 
 	return g;

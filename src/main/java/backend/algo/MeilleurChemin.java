@@ -10,7 +10,7 @@ public class MeilleurChemin {
 	public static Chemin MeilleurChemin(Map<Quai, DistanceAntecedants> distanceAntecedantsMap, Quai origin, Quai destination) {
 		List<Quai> cheminQuai = new ArrayList<>();
 		List<Arete> cheminArete = new ArrayList<>();
-		int poid = distanceAntecedantsMap.get(destination).getDistance();
+		double poid = distanceAntecedantsMap.get(destination).getDistance();
 
 		Quai current_quai = destination;
 		while (!current_quai.equals(origin)) {
@@ -30,7 +30,7 @@ public class MeilleurChemin {
 		Graphe graph = service.getGraphe();
 
 		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
-		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		double minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
 		Quai originQuaiMin = origin.getQuais().get(0);
 		Quai destinationQuaiMin = destination.getQuais().get(0);
 
@@ -54,7 +54,7 @@ public class MeilleurChemin {
 		Graphe graph = service.getGrapheCorrespondances();
 
 		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
-		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		double minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
 		Quai originQuaiMin = origin.getQuais().get(0);
 		Quai destinationQuaiMin = destination.getQuais().get(0);
 
@@ -78,7 +78,7 @@ public class MeilleurChemin {
 		Graphe graph = service.getGrapheCO2();
 
 		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
-		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		double minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
 		Quai originQuaiMin = origin.getQuais().get(0);
 		Quai destinationQuaiMin = destination.getQuais().get(0);
 

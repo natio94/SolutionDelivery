@@ -62,7 +62,7 @@ class KruskalTest {
     void acpm_poidsTotalCorrect() {
         Graphe g = creerGrapheSimple();
         Graphe acpm = new Kruskal().getACPM(g);
-        int total = acpm.getAretes().stream().mapToInt(Arete::getPoid).sum();
+        Double total = acpm.getAretes().stream().mapToDouble(Arete::getPoid).sum();
         assertEquals(150, total);
     }
 
@@ -142,7 +142,7 @@ class KruskalTest {
 
         // ACPM optimal : a12(1) + a23(2) + a14(4) = 7
         assertEquals(3, acpm.getAretes().size());
-        int total = acpm.getAretes().stream().mapToInt(Arete::getPoid).sum();
+        double total = acpm.getAretes().stream().mapToDouble(Arete::getPoid).sum();
         assertEquals(7, total);
     }
 }

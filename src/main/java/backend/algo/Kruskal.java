@@ -50,7 +50,7 @@ public class Kruskal {
         }
 
         List<Arete> aretesTriees = g.getAretes().stream()
-                .sorted(Comparator.comparingInt(Arete::getPoid))
+                .sorted(Comparator.comparingDouble(Arete::getPoid))
                 .toList();
 
         // Union-Find sur les IDs de stations pour éviter de garder les deux sens d'une même ligne

@@ -10,7 +10,7 @@ public class Dijkstra {
 		Map<Quai, DistanceAntecedants> distanceAntecedantsMap = new HashMap<>();
 		Quai antecedantQuai = null;
 		Arete antecedantArete = null;
-		distanceAntecedantsMap.put(origin, new DistanceAntecedants(0, antecedantQuai, antecedantArete));
+		distanceAntecedantsMap.put(origin, new DistanceAntecedants(0.0, antecedantQuai, antecedantArete));
 		Comparator<Quai> compareByDistance = (Quai quai1, Quai quai2) -> {
 			if (distanceAntecedantsMap.get(quai1) == null && distanceAntecedantsMap.get(quai2) == null) {
 				return 0;
@@ -33,7 +33,7 @@ public class Dijkstra {
 			for (var arete : currentQuai.getVoisins()) {
 				Quai voisin = arete.getDestination();
 				if (distanceAntecedantsMap.get(voisin) == null) {
-					Integer distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
+					Double distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
 					antecedantQuai = currentQuai;
 					distanceAntecedantsMap.put(voisin, new DistanceAntecedants(distance, antecedantQuai, arete));
 					// update the ordering of the unvisited set
@@ -42,7 +42,7 @@ public class Dijkstra {
 				} else if (
 					distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid() < distanceAntecedantsMap.get(voisin).getDistance()
 					) {
-					Integer distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
+					Double distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
 					antecedantQuai = currentQuai;
 					distanceAntecedantsMap.get(voisin).setDistance(distance);
 					distanceAntecedantsMap.get(voisin).setAntecedants(antecedantQuai, arete);
