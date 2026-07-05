@@ -9,7 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="Adding credits">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Appli.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Appli.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -136,6 +135,7 @@
     "Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "Maven.SolutionDelivery [package].executor": "Run",
     "Maven.SolutionDelivery [test].executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",

@@ -24,18 +24,9 @@ import java.util.stream.Collectors;
 
 public class GraphController {
 
-	@FXML private Button menuButton;
+	@FXML private MenuButton menuButton;
+	@FXML
 	private CheckMenuItem acpmMenuItem;
-	@FXML
-	private ToggleButton toggleAPCM;
-
-
-	@FXML
-	private Button creditsButton;
-
-	@FXML
-	private Button checkConnexite;
-
 
 	@FXML
 	private MenuItem connexiteMenuItem;
@@ -168,11 +159,6 @@ public class GraphController {
 		echangerButton.setOnAction(e -> echangerDepartArrivee());
 
 
-		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
-		checkConnexite.setOnAction(e -> verifConnexite());
-		creditsButton.setOnAction(e->showCredits());
-
-
 		acpmMenuItem.setOnAction(e -> showACPM(acpmMenuItem.isSelected()));
 		connexiteMenuItem.setOnAction(e -> verifConnexite());
 		creditsMenuItem.setOnAction(e -> showCredits());
@@ -245,24 +231,6 @@ public class GraphController {
 		arriveField.setText(depart);
 	}
 
-
-	private record ItineraireResultat(Chemin chemin, double dureeSecondes, int changements, double co2Grammes) {
-	    List<Quai> quais() { return chemin.cheminQuai(); }
-	}
-
-	/** Resultat local du calcul d'itineraire (pas besoin d'une classe dediee cote backend). */
-	private record ItineraireResultat(List<Quai> quais, int distanceTotale) {
-		int nombreChangements() {
-			int changements = 0;
-			for (int i = 1; i < quais.size(); i++) {
-				Ligne a = quais.get(i).getLigne();
-				Ligne b = quais.get(i - 1).getLigne();
-				if (a != null && b != null && !a.getId().equals(b.getId())) {
-					changements++;
-				}
-			}
-			return changements;
-		}
 
 	private record ItineraireResultat(Chemin chemin, double dureeSecondes, int changements, double co2Grammes) {
 		List<Quai> quais() { return chemin.cheminQuai(); }
