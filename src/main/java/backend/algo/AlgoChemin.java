@@ -62,6 +62,7 @@ public class AlgoChemin {
 
 		double poid = 0.0;
 		int i = 0;
+		Ligne currentLigne = null;
 		Quai currentQuai = graph.getQuai(chemin.cheminQuai().get(i).getId());
 		Quai lastQuai = graph.getQuai(chemin.cheminQuai().get(chemin.cheminQuai().size() - 1).getId());
 		Arete aretePoid = null;
@@ -72,7 +73,15 @@ public class AlgoChemin {
 					break;
 				}
 			}
-			poid = poid + aretePoid.getPoid();
+
+			if ( aretePoid.getType() == Arete.Type.metro && !aretePoid.getDestination().getLigne().equals(currentLigne) ) {
+				if (currentLigne == null) {
+					currentLigne = aretePoid.getDestination().getLigne();
+				} else {
+					poid = poid + 1.0;
+					currentLigne = aretePoid.getDestination().getLigne();
+				}
+			}
 			i = i + 1;
 			currentQuai = aretePoid.getDestination();
 		}
