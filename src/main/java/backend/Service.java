@@ -15,7 +15,7 @@ public class Service {
     private final Graphe grapheCorrespondances;
     private final Graphe grapheCO2;
 
-    public Service() {
+    private Service() {
 	ConstructeurGraphe constructeur = new ConstructeurGraphe();
         this.graphe = constructeur.buildGraph();
         this.grapheCorrespondances = constructeur.buildGraphCorrespondances();
@@ -65,13 +65,23 @@ public class Service {
         return AnalyseGraph.estConnexeStations(graphe.getStations());
     }
 
-    public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+    public static Chemin MeilleurCheminTemps(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminTemps(origin, destination);
     }
-    public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+    public static Chemin MeilleurCheminCorrespondances(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCorrespondances(origin, destination);
     }
-    public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+    public static Chemin MeilleurCheminCO2(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCO2(origin, destination);
+    }
+
+    public static double getCheminTemps(Chemin chemin) {
+	    return AlgoChemin.getCheminTemps(chemin);
+    }
+    public static double getCheminCO2(Chemin chemin) {
+	    return AlgoChemin.getCheminCO2(chemin);
+    }
+    public static double getCheminNbCorrespondances(Chemin chemin) {
+	    return AlgoChemin.getCheminNbCorrespondances(chemin);
     }
 }

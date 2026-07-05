@@ -1,0 +1,119 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"BackgroundAgentGlobalSettings\">\r\n    <option name=\"selectedModelId\" value=\"auto\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"5aff04f8-e7a1-4fe1-baec-cabfb4889236\" name=\"Changes\" comment=\"Adding credits\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/resources/Appli.fxml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/resources/Appli.fxml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"CopilotPersistence\">\r\n    <persistenceIdMap>\r\n      <entry key=\"_C:/Users/user/Documents/Cours/Mastercamp/SolutionDelivery\" value=\"3Fwl4trB6am6hYqfSgbtyNcLbj0\" />\r\n    </persistenceIdMap>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;natio94&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/natio94/SolutionDelivery.git&quot;,\r\n    &quot;accountId&quot;: &quot;640b38e8-c526-45aa-a545-e2b6b5a396c6&quot;\r\n  }\r\n}</component>\r\n  <component name=\"McpProjectServerCommands\">\r\n    <commands />\r\n    <urls />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 7,\r\n  &quot;fromUser&quot;: false\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3Fwl4trB6am6hYqfSgbtyNcLbj0\" />\r\n  <component name=\"ProjectSessionTemplates\">\r\n    <option name=\"panelTemplate\">\r\n      <template>\r\n        <option name=\"modeId\" value=\"Ask\" />\r\n        <option name=\"model\">\r\n          <model>\r\n            <option name=\"modelType\" value=\"builtin_family\" />\r\n            <option name=\"modelValue\" value=\"auto\" />\r\n          </model>\r\n        </option>\r\n        <option name=\"targetType\" value=\"BACKGROUND\" />\r\n      </template>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Maven.SolutionDelivery [clean].executor\": \"Run\",\r\n    \"Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor\": \"Run\",\r\n    \"Maven.SolutionDelivery [package].executor\": \"Run\",\r\n    \"Maven.SolutionDelivery [test].executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"RunOnceActivity.typescript.service.memoryLimit.init\": \"true\",\r\n    \"codeWithMe.voiceChat.enabledByDefault\": \"false\",\r\n    \"copilot.chat.legacySessionMetadata.migrated\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Yu\\Documents\\GitHub\\SolutionDelivery\\src\\main\\resources\\images\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"mvn package\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"5aff04f8-e7a1-4fe1-baec-cabfb4889236\" name=\"Changes\" comment=\"\" />\r\n      <created>1782993825510</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1782993825510</updated>\r\n      <workItem from=\"1783242494931\" duration=\"1612000\" />\r\n      <workItem from=\"1783247200400\" duration=\"20401000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Adding credits\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1783170363921</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1783170363921</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Adding credits\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Adding credits\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision f81b1d075f9207814deabe053780e58b59bae991)
++++ b/.idea/workspace.xml	(date 1783279222972)
+@@ -7,10 +7,8 @@
+     <option name="selectedModelId" value="auto" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="Adding credits">
++    <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="correcting some errors on test file and updating correspondance handling">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/Appli.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Appli.fxml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -44,10 +42,6 @@
+     &quot;accountId&quot;: &quot;640b38e8-c526-45aa-a545-e2b6b5a396c6&quot;
+   }
+ }</component>
+-  <component name="McpProjectServerCommands">
+-    <commands />
+-    <urls />
+-  </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 7,
+   &quot;fromUser&quot;: false
+@@ -71,31 +65,25 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Maven.SolutionDelivery [clean].executor": "Run",
+-    "Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+-    "Maven.SolutionDelivery [package].executor": "Run",
+-    "Maven.SolutionDelivery [test].executor": "Run",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.git.unshallow": "true",
+-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+-    "codeWithMe.voiceChat.enabledByDefault": "false",
+-    "copilot.chat.legacySessionMetadata.migrated": "true",
+-    "git-widget-placeholder": "master",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Maven.SolutionDelivery [clean].executor&quot;: &quot;Run&quot;,
++    &quot;Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
++    &quot;Maven.SolutionDelivery [package].executor&quot;: &quot;Run&quot;,
++    &quot;Maven.SolutionDelivery [test].executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
++    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
++    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
+-  <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="C:\Users\Yu\Documents\GitHub\SolutionDelivery\src\main\resources\images" />
+-    </key>
+-  </component>
++}</component>
+   <component name="RunAnythingCache">
+     <option name="myCommands">
+       <command value="mvn package" />
+@@ -117,7 +105,7 @@
+       <option name="presentableId" value="Default" />
+       <updated>1782993825510</updated>
+       <workItem from="1783242494931" duration="1612000" />
+-      <workItem from="1783247200400" duration="20401000" />
++      <workItem from="1783247200400" duration="21538000" />
+     </task>
+     <task id="LOCAL-00001" summary="Adding credits">
+       <option name="closed" value="true" />
+@@ -127,7 +115,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1783170363921</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="correcting some errors on test file and updating correspondance handling">
++      <option name="closed" value="true" />
++      <created>1783272336198</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1783272336198</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -135,6 +131,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="Adding credits" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Adding credits" />
++    <MESSAGE value="correcting some errors on test file and updating correspondance handling" />
++    <option name="LAST_COMMIT_MESSAGE" value="correcting some errors on test file and updating correspondance handling" />
+   </component>
+ </project>
+\ No newline at end of file

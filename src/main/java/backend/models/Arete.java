@@ -3,12 +3,12 @@ package backend.models;
 public class Arete {
     Quai source;
     Quai destination;
-    int poid;
+    double poid;
     Ligne ligne;
     public enum Type { pied, metro }
     Type type;
 
-    public Arete(Quai source, Quai destination, int poid, Ligne ligne, Type type){
+    public Arete(Quai source, Quai destination, double poid, Ligne ligne, Type type){
         this.source = source;
         this.destination = destination;
         this.poid = poid;
@@ -18,11 +18,11 @@ public class Arete {
 
     public Quai getSource()      { return source; }
     public Quai getDestination() { return destination; }
-    public int getPoid()         { return poid; }
+    public double getPoid()         { return poid; }
     public Ligne getLigne()      { return ligne; }
     public Type getType()        { return type; }
 
-    public void setPoid(int poid) {
+    public void setPoid(double poid) {
 	    this.poid = poid;
     }
 }
