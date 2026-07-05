@@ -18,7 +18,7 @@ class AnalyseGraphTest {
     }
 
     private Quai creerQuai(String id, Station station) {
-        return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station,0,0);
+        return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station, 0, 0);
     }
 
     private void relier(Quai from, Quai to) {
