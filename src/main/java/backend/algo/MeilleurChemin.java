@@ -68,4 +68,13 @@ public class MeilleurChemin {
 
 		return MeilleurChemin(distanceMap, origin, destination);
 	}
+
+	public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGrapheCO2();
+
+		Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+
+		return MeilleurChemin(distanceMap, origin, destination);
+	}
 }

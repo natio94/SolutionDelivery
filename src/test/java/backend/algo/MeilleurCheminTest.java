@@ -99,4 +99,26 @@ class MeilleurCheminTest {
 			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
 		}
 	}
+
+	@Test
+	void checkMeilleurCheminCO2() {
+		Service service = Service.getInstance();
+		System.out.println("MeilleurChemin CO2 test");
+
+		Station republique = service.getGraphe().getStationParNom("République");
+		Station bastille = service.getGraphe().getStationParNom("Bastille");
+		Station villejuif = service.getGraphe().getStationParNom("Villejuif - Louis Aragon");
+
+		System.out.println("République - Bastille");
+		List<Quai> pathRepubliqueBastille = MeilleurChemin.MeilleurCheminCO2(republique, bastille);
+		for (var quai : pathRepubliqueBastille) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+
+		System.out.println("République - Villejuif Louis Aragon");
+		List<Quai> pathRepubliqueVillejuif = MeilleurChemin.MeilleurCheminCO2(republique, villejuif);
+		for (var quai : pathRepubliqueVillejuif) {
+			System.out.println("id: " + quai.getId() + " ligne: " + quai.getLigne().getNom() + " station: " + quai.getStation().getNom());
+		}
+	}
 }

@@ -13,11 +13,13 @@ public class Service {
 
     private final Graphe graphe;
     private final Graphe grapheCorrespondances;
+    private final Graphe grapheCO2;
 
     private Service() {
 	ConstructeurGraphe constructeur = new ConstructeurGraphe();
         this.graphe = constructeur.buildGraph();
         this.grapheCorrespondances = constructeur.buildGraphCorrespondances();
+        this.grapheCO2 = constructeur.buildGraphCO2();
     }
 
     // Service is a lazy singleton
@@ -38,6 +40,9 @@ public class Service {
     }
     public Graphe getGrapheCorrespondances() {
         return grapheCorrespondances;
+    }
+    public Graphe getGrapheCO2() {
+        return grapheCO2;
     }
 
     // --- Recherche de stations ---
@@ -65,5 +70,8 @@ public class Service {
     }
     public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCorrespondances(origin, destination);
+    }
+    public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminCO2(origin, destination);
     }
 }
