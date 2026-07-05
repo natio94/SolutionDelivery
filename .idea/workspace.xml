@@ -3,107 +3,95 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="abbd65c9-fa6b-44d8-aecc-4f96219fb030" name="Changes" comment="">
+    <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="Adding credits">
+      <change afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/TrajetDetails.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/AreteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/AreteView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Appli.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Appli.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/AnalyseGraphTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/AnalyseGraphTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/DijkstraTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/DijkstraTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/KruskalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/KruskalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/MeilleurCheminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/MeilleurCheminTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/user/Documents/Cours/Mastercamp/SolutionDelivery" value="3Fwl4trB6am6hYqfSgbtyNcLbj0" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
-  </component>
-  <component name="NextEditCompletionFeaturesState">
-    <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0000001654159933" />
-      <entry key="S10" value="1.002098140386544" />
-      <entry key="S30" value="2.19812821580347" />
-      <entry key="S60" value="7.4078851418548695" />
-      <entry key="M2" value="16.91283182473124" />
-      <entry key="M5" value="29.88140827568256" />
-      <entry key="M10" value="37.201208386967764" />
-      <entry key="M15" value="40.564669229958454" />
-      <entry key="M30" value="45.04257601765748" />
-      <entry key="H1" value="48.060798643911866" />
-      <entry key="H2" value="49.886449382593256" />
-      <entry key="H4" value="50.90269994623778" />
-      <entry key="D1" value="51.811048858059706" />
-      <entry key="W1" value="51.97285224142042" />
-    </decayedCancelled>
-    <decayedSelected>
-      <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="0.0" />
-      <entry key="S2" value="2.0884778125009145E-251" />
-      <entry key="S5" value="5.3448060004265654E-101" />
-      <entry key="S10" value="7.310818011978251E-51" />
-      <entry key="S30" value="1.9408351889776867E-17" />
-      <entry key="S60" value="4.4054911065370345E-9" />
-      <entry key="M2" value="6.637387367433836E-5" />
-      <entry key="M5" value="0.021320572676026342" />
-      <entry key="M10" value="0.1460156590096637" />
-      <entry key="M15" value="0.2772892003008256" />
-      <entry key="M30" value="0.5265825674106828" />
-      <entry key="H1" value="0.7256600908212345" />
-      <entry key="H2" value="0.8518568487846044" />
-      <entry key="H4" value="0.9229609140069801" />
-      <entry key="D1" value="0.9867274685727596" />
-      <entry key="W1" value="0.9980930493056878" />
-    </decayedSelected>
-    <decayedShown>
-      <entry key="MS100" value="0.9395227492140118" />
-      <entry key="MS500" value="0.9876008614453725" />
-      <entry key="S2" value="0.9968856972203758" />
-      <entry key="S5" value="0.9987532783587939" />
-      <entry key="S10" value="1.001473590522207" />
-      <entry key="S30" value="2.197719679222937" />
-      <entry key="S60" value="7.406394735647088" />
-      <entry key="M2" value="16.908389220601986" />
-      <entry key="M5" value="29.896266385234476" />
-      <entry key="M10" value="37.34113590744646" />
-      <entry key="M15" value="40.836492824857835" />
-      <entry key="M30" value="45.56521744062644" />
-      <entry key="H1" value="48.78401876087955" />
-      <entry key="H2" value="50.73693716138556" />
-      <entry key="H4" value="51.82493409807437" />
-      <entry key="D1" value="52.797648857070136" />
-      <entry key="W1" value="52.9709269188043" />
-    </decayedShown>
-  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;natio94&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/natio94/SolutionDelivery.git&quot;,
+    &quot;accountId&quot;: &quot;640b38e8-c526-45aa-a545-e2b6b5a396c6&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7,
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3Fwl4trB6am6hYqfSgbtyNcLbj0" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Ask" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Maven.SolutionDelivery [clean].executor": "Run",
     "Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
     "Maven.SolutionDelivery [package].executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
+    "Maven.SolutionDelivery [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunAnythingCache">
@@ -114,7 +102,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -125,7 +114,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1782993825510</updated>
+      <workItem from="1783242494931" duration="1612000" />
+      <workItem from="1783247200400" duration="20401000" />
     </task>
+    <task id="LOCAL-00001" summary="Adding credits">
+      <option name="closed" value="true" />
+      <created>1783170363921</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1783170363921</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding credits" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding credits" />
   </component>
 </project>

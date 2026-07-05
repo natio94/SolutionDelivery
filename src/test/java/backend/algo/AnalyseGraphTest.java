@@ -7,7 +7,6 @@ import backend.models.Station;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +18,7 @@ class AnalyseGraphTest {
     }
 
     private Quai creerQuai(String id, Station station) {
-        return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station);
+        return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station,0,0);
     }
 
     private void relier(Quai from, Quai to) {

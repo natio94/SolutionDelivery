@@ -1,5 +1,6 @@
 package frontend.ui.views;
 
+import backend.models.Quai;
 import backend.models.Station;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -44,7 +45,7 @@ public class StationView extends Pane {
 		setLayoutX(x - RADIUS);
 		setLayoutY(y - RADIUS);
 
-		int nbLignes = station.getQuais().size();
+		int nbLignes = station.getQuais().stream().map(Quai::getLigne).distinct().toList().size();
 		Tooltip tooltip = new Tooltip(station.getNom() + " (" + nbLignes + " ligne(s))");
 		Tooltip.install(circle, tooltip);
 
