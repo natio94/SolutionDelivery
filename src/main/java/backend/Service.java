@@ -1,26 +1,48 @@
 package backend;
 
-import backend.algo.AnalyseGraph;
-import backend.algo.Kruskal;
+import backend.algo.*;
+import backend.models.*;
 import backend.gtfs.ConstructeurGraphe;
-import backend.models.Arete;
-import backend.models.Graphe;
-import backend.models.Station;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
 
-    private final Graphe graphe;
+	private static volatile Service instance = null; // Service is a lazy singleton
 
-    public Service() {
-        this.graphe = new ConstructeurGraphe().buildGraph();
+    private final Graphe graphe;
+    private final Graphe grapheCorrespondances;
+    private final Graphe grapheCO2;
+
+    private Service() {
+	ConstructeurGraphe constructeur = new ConstructeurGraphe();
+        this.graphe = constructeur.buildGraph();
+        this.grapheCorrespondances = constructeur.buildGraphCorrespondances();
+        this.grapheCO2 = constructeur.buildGraphCO2();
+    }
+
+    // Service is a lazy singleton
+    public static Service getInstance() {
+	    if (instance == null) {
+		    synchronized (Service.class) {
+			    if (instance == null) {
+				    instance = new Service();
+			    }
+		    }
+	    }
+	    return instance;
     }
 
     // --- Accès au graphe ---
     public Graphe getGraphe() {
         return graphe;
+    }
+    public Graphe getGrapheCorrespondances() {
+        return grapheCorrespondances;
+    }
+    public Graphe getGrapheCO2() {
+        return grapheCO2;
     }
 
     // --- Recherche de stations ---
@@ -41,5 +63,15 @@ public class Service {
 
     public boolean estConnexeStations() {
         return AnalyseGraph.estConnexeStations(graphe.getStations());
+    }
+
+    public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminTemps(origin, destination);
+    }
+    public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminCorrespondances(origin, destination);
+    }
+    public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+	    return MeilleurChemin.MeilleurCheminCO2(origin, destination);
     }
 }

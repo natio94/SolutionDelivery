@@ -1,6 +1,8 @@
 package backend.algo;
 
 import backend.models.*;
+import backend.algo.Dijkstra;
+import backend.Service;
 
 import java.util.*;
 
@@ -47,5 +49,77 @@ public class MeilleurChemin {
 		}
 
 		return path;
+	}
+
+	public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGraphe();
+
+		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		Quai originQuaiMin = origin.getQuais().get(0);
+		Quai destinationQuaiMin = destination.getQuais().get(0);
+
+		for (var originQuai : origin.getQuais()) {
+			Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, originQuai);
+			for (var destinationQuai : destination.getQuais()) {
+				if (distanceMap.get(destinationQuai).getDistance() < minDistance) {
+					distanceMapMin = distanceMap;
+					minDistance = distanceMap.get(destinationQuai).getDistance();
+					originQuaiMin = originQuai;
+					destinationQuaiMin = destinationQuai;
+				}
+			}
+		}
+
+		return MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+	}
+
+	public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGrapheCorrespondances();
+
+		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		Quai originQuaiMin = origin.getQuais().get(0);
+		Quai destinationQuaiMin = destination.getQuais().get(0);
+
+		for (var originQuai : origin.getQuais()) {
+			Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, originQuai);
+			for (var destinationQuai : destination.getQuais()) {
+				if (distanceMap.get(destinationQuai).getDistance() < minDistance) {
+					distanceMapMin = distanceMap;
+					minDistance = distanceMap.get(destinationQuai).getDistance();
+					originQuaiMin = originQuai;
+					destinationQuaiMin = destinationQuai;
+				}
+			}
+		}
+
+		return MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+	}
+
+	public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+		Service service = Service.getInstance();
+		Graphe graph = service.getGrapheCO2();
+
+		Map<Quai, DistanceAntecedants> distanceMapMin = Dijkstra.getDistanceAntecedantsMap(graph, origin.getQuais().get(0));
+		int minDistance = distanceMapMin.get(destination.getQuais().get(0)).getDistance();
+		Quai originQuaiMin = origin.getQuais().get(0);
+		Quai destinationQuaiMin = destination.getQuais().get(0);
+
+		for (var originQuai : origin.getQuais()) {
+			Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, originQuai);
+			for (var destinationQuai : destination.getQuais()) {
+				if (distanceMap.get(destinationQuai).getDistance() < minDistance) {
+					distanceMapMin = distanceMap;
+					minDistance = distanceMap.get(destinationQuai).getDistance();
+					originQuaiMin = originQuai;
+					destinationQuaiMin = destinationQuai;
+				}
+			}
+		}
+
+		return MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
 	}
 }

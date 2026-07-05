@@ -88,7 +88,7 @@ public class ConstructeurGraphe {
                 // Créer le Quai s'il n'existe pas encore
                 Quai quai = g.getQuai(st.stopId());
                 if (quai == null) {
-                    quai = new Quai(st.stopId(), ligne, station);
+                    quai = new Quai(st.stopId(), ligne, station, stop.lon(), stop.lat());
                     g.addQuai(quai);
                     station.addQuai(quai);
                 }
@@ -118,6 +118,64 @@ public class ConstructeurGraphe {
         }
 
         return g;
+    }
+
+    public Graphe buildGraphCorrespondances() {
+        Graphe g = buildGraph();
+
+	for (var arete : g.getAretes()) {
+		if ( arete.getSource().getLigne().equals(arete.getDestination().getLigne()) ) {
+			arete.setPoid(0);
+		} else {
+			arete.setPoid(1);
+		}
+	}
+
+	return g;
+    }
+
+    public Graphe buildGraphCO2() {
+        Graphe g = buildGraph();
+
+	for (var arete : g.getAretes()) {
+		double lat1 = arete.getSource().getLatitude();
+		double lon1 = arete.getSource().getLongitude();
+		double lat2 = arete.getDestination().getLatitude();
+		double lon2 = arete.getDestination().getLongitude();
+		double distance = distance(lat1, lat2, lon1, lon2);
+		double magicCO2 = 3.8; // CO2 emissions per traveler per km on the RATP metro service, in grams. retrieved from https://data.iledefrance-mobilites.fr/explore/dataset/emission-de-co2e-par-voyageur-kilometre-sur-le-reseau/information/
+		arete.setPoid((int) (magicCO2 * distance));
+	}
+
+	return g;
+    }
+
+
+    // Source - https://stackoverflow.com/a/16794680
+    // Posted by David George, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-07-02, License - CC BY-SA 4.0
+    /**
+     * Calculate distance between two points in latitude and longitude
+     * Uses Haversine method as its base.
+     * 
+     * lat1, lon1 Start point lat2, lon2 End point 
+     * @returns Distance in Kilometers
+     */
+    public static double distance(double lat1, double lat2, double lon1, double lon2) {
+
+	    final int R = 6371; // Radius of the earth
+
+	    double latDistance = Math.toRadians(lat2 - lat1);
+	    double lonDistance = Math.toRadians(lon2 - lon1);
+	    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+		    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+		    * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double distance = R * c;
+
+	    distance = Math.pow(distance, 2);
+
+	    return Math.sqrt(distance);
     }
 
     private int parseTemps(String hms) {
