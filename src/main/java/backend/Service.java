@@ -74,4 +74,14 @@ public class Service {
     public static Chemin MeilleurCheminCO2(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCO2(origin, destination);
     }
+
+    public static double getCheminTemps(Chemin chemin) {
+	    return AlgoChemin.getCheminTemps(chemin);
+    }
+    public static double getCheminCO2(Chemin chemin) {
+	    return AlgoChemin.getCheminCO2(chemin);
+    }
+    public static double getCheminNbCorrespondances(Chemin chemin) {
+	    return AlgoChemin.getCheminNbCorrespondances(chemin);
+    }
 }
