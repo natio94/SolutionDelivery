@@ -97,7 +97,7 @@ public class GraphController {
 	private double paneWidth;
 	private double paneHeight;
 	private final List<AreteView> piedViews = new ArrayList<>();
-	private final Service service = Service.getInstance();
+	private Service service;
 	private final Map<String, StationView> stationNodes = new HashMap<>();
 	private final Map<String, String> lineNameToId = new HashMap<>();
 	private final Map<String, AreteView> arreteViews = new HashMap<>();
@@ -111,7 +111,15 @@ public class GraphController {
 		viewportPane.widthProperty().addListener((o, a, b) -> ajusterClip());
 		viewportPane.heightProperty().addListener((o, a, b) -> ajusterClip());
 
-		this.graphe = service.getGraphe();
+		try {
+			this.service = Service.getInstance();
+			this.graphe = service.getGraphe();
+		} catch (Exception e) {
+			afficherErreurChargement(e);
+			return; // stopper initialize() proprement, l'UI restera vide mais stable
+		}
+
+
 		panZoomHandler = new PanZoomHandler(graphPane);
 		panZoomHandler.addZoomListener(this::onZoomChanged);
 
@@ -398,6 +406,27 @@ public class GraphController {
 		resultatBox.setVisible(true);
 		resultatBox.setManaged(true);
 	}
+
+	private void afficherErreurChargement(Exception e) {
+		Throwable cause = e.getCause() != null ? e.getCause() : e;
+
+		javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+				javafx.scene.control.Alert.AlertType.ERROR);
+		alert.setTitle("Erreur de chargement");
+		alert.setHeaderText("Impossible de charger les données du réseau");
+		alert.setContentText(cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName());
+
+		java.io.StringWriter sw = new java.io.StringWriter();
+		cause.printStackTrace(new java.io.PrintWriter(sw));
+		javafx.scene.control.TextArea detail = new javafx.scene.control.TextArea(sw.toString());
+		detail.setEditable(false);
+		detail.setWrapText(true);
+		detail.setPrefRowCount(12);
+		alert.getDialogPane().setExpandableContent(detail);
+
+		alert.showAndWait();
+	}
+
 
 	private void afficherErreur(String message) {
 		boolean affiche = message != null;
