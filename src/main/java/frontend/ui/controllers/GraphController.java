@@ -76,6 +76,9 @@ public class GraphController {
 	private Label resultatDetailLabel;
 
 	@FXML
+	private Label detailVideLabel;
+
+	@FXML
 	private VBox detailItineraireBox;
 
 	@FXML
@@ -361,18 +364,21 @@ public class GraphController {
 		} else {
 			int minutes = Math.toIntExact(Math.round(resultat.dureeSecondes() / 60f));
 
-			javafx.scene.layout.HBox metriques = new javafx.scene.layout.HBox(10);
+			javafx.scene.layout.VBox metriques = new javafx.scene.layout.VBox(4);
 
 			javafx.scene.control.Label lTemps = new javafx.scene.control.Label("🕐 " + minutes + " min");
 			lTemps.getStyleClass().add("option-metrique");
+			lTemps.setWrapText(true);
 
 			javafx.scene.control.Label lChangements = new javafx.scene.control.Label(
-					"🔁 " + resultat.changements() + " chgt");
+					"🔁 " + resultat.changements() + " changement(s)");
 			lChangements.getStyleClass().add("option-metrique");
+			lChangements.setWrapText(true);
 
 			javafx.scene.control.Label lCo2 = new javafx.scene.control.Label(
-					"🌿 ~" + Math.round(resultat.co2Grammes()) + " g");
+					"🌿 ~" + Math.round(resultat.co2Grammes()) + " g CO₂");
 			lCo2.getStyleClass().add("option-metrique");
+			lCo2.setWrapText(true);
 
 			metriques.getChildren().addAll(lTemps, lChangements, lCo2);
 			carte.getChildren().add(metriques);
@@ -455,26 +461,29 @@ public class GraphController {
 		for (int idx = 0; idx < etapes.size(); idx++) {
 			EtapeDetail etape = etapes.get(idx);
 
-			javafx.scene.layout.HBox ligne = new javafx.scene.layout.HBox(10);
+			javafx.scene.layout.VBox ligne = new javafx.scene.layout.VBox(2);
 			ligne.getStyleClass().add("detail-etape");
-			ligne.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+			javafx.scene.layout.HBox entete = new javafx.scene.layout.HBox(6);
+			entete.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
 			javafx.scene.control.Label icone = new javafx.scene.control.Label(etape.icone());
 			icone.getStyleClass().add("detail-etape-icone");
 
-			javafx.scene.layout.VBox texte = new javafx.scene.layout.VBox(1);
 			javafx.scene.control.Label titre = new javafx.scene.control.Label(etape.titre());
 			titre.getStyleClass().add("detail-etape-titre");
-			javafx.scene.control.Label sousTitre = new javafx.scene.control.Label(etape.sousTitre());
-			sousTitre.getStyleClass().add("detail-etape-sous");
-			sousTitre.setWrapText(true);
-			texte.getChildren().addAll(titre, sousTitre);
-			javafx.scene.layout.HBox.setHgrow(texte, javafx.scene.layout.Priority.ALWAYS);
+			javafx.scene.layout.HBox.setHgrow(titre, javafx.scene.layout.Priority.ALWAYS);
 
 			javafx.scene.control.Label duree = new javafx.scene.control.Label(etape.duree());
 			duree.getStyleClass().add("detail-etape-duree");
 
-			ligne.getChildren().addAll(icone, texte, duree);
+			entete.getChildren().addAll(icone, titre, duree);
+
+			javafx.scene.control.Label sousTitre = new javafx.scene.control.Label(etape.sousTitre());
+			sousTitre.getStyleClass().add("detail-etape-sous");
+			sousTitre.setWrapText(true);
+
+			ligne.getChildren().addAll(entete, sousTitre);
 			detailEtapesBox.getChildren().add(ligne);
 
 			if (idx < etapes.size() - 1) {
@@ -484,6 +493,8 @@ public class GraphController {
 			}
 		}
 
+		detailVideLabel.setVisible(false);
+		detailVideLabel.setManaged(false);
 		detailItineraireBox.setVisible(true);
 		detailItineraireBox.setManaged(true);
 	}
@@ -540,6 +551,8 @@ public class GraphController {
 			resultatBox.setManaged(false);
 			detailItineraireBox.setVisible(false);
 			detailItineraireBox.setManaged(false);
+			detailVideLabel.setVisible(true);
+			detailVideLabel.setManaged(true);
 		}
 	}
 

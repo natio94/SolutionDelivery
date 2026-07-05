@@ -300,22 +300,7 @@
     -fx-text-fill: #C7CEDD;
 }
 
-/* ---------- Détail de l'itinéraire ---------- */
-
-.detail-itineraire {
-    -fx-background-color: #FCFAF4;
-    -fx-background-radius: 8px;
-    -fx-border-color: #E8E1CC;
-    -fx-border-radius: 8px;
-    -fx-padding: 12px 14px;
-}
-
-.detail-titre {
-    -fx-font-family: "Arial Black", "Arial Bold", "Helvetica Neue", sans-serif;
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #14213D;
-}
+/* ---------- Détail de l'itinéraire (barre latérale) ---------- */
 
 .detail-scroll {
     -fx-background-color: transparent;
@@ -328,11 +313,11 @@
 }
 
 .detail-etape {
-    -fx-padding: 6px 2px;
+    -fx-padding: 8px 2px;
 }
 
 .detail-etape-icone {
-    -fx-font-size: 15px;
+    -fx-font-size: 16px;
     -fx-min-width: 22px;
     -fx-alignment: center;
 }
@@ -355,7 +340,7 @@
 }
 
 .detail-separateur {
-    -fx-padding: 0 0 0 32px;
+    -fx-padding: 0 0 0 30px;
 }
 
 .champ-mini-label {
