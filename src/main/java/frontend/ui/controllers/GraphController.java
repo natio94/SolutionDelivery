@@ -28,7 +28,8 @@ public class GraphController {
 	private CheckMenuItem acpmMenuItem;
 	@FXML
 	private ToggleButton toggleAPCM;
-
+	@FXML
+	private Button checkConnexite;
 
 	@FXML
 	private Button creditsButton;
