@@ -1,6 +1,6 @@
-package backend;
+package backend.algo;
 
-import backend.algo.Dijkstra;
+import backend.Service;
 import backend.models.*;
 
 import java.util.*;
@@ -15,7 +15,7 @@ class DijkstraTest {
 	}
 
 	private Quai creerQuai(String id, Station station) {
-		return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station);
+		return new Quai(id, new Ligne("L1", "Ligne 1", "blue"), station,0,0);
 	}
 
 	@Test
@@ -104,7 +104,7 @@ class DijkstraTest {
 	@Test
 	void checkNoInfiniteLoop() {
 		System.out.println("Dijkstra quai infinite loop check through elapsed time");
-		Service service = new Service();
+		Service service = Service.getInstance();
 		long startTime = System.nanoTime();
 		Quai republique = service.getGraphe().getStationParNom("République").getQuais().get(0);
 		Dijkstra.getDistanceAntecedantsMap(service.getGraphe(), republique);
@@ -193,7 +193,7 @@ class DijkstraTest {
 	@Test
 	void grapheReel_toutesStationsAtteignables() {
 		// Sur le vrai graphe, toutes les stations doivent être atteignables depuis n'importe quelle origine
-		Service service = new Service();
+		Service service = Service.getInstance();
 		Quai origine = service.getGraphe().getStationParNom("Châtelet").getQuais().get(0);
 
 		Map<Quai, DistanceAntecedants> results = Dijkstra.getDistanceAntecedantsMap(service.getGraphe(), origine);

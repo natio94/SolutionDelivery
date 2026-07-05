@@ -17,17 +17,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GraphController {
 
 	@FXML
 	private ToggleButton toggleAPCM;
+
 
 	@FXML
 	private Button creditsButton;
@@ -94,8 +91,8 @@ public class GraphController {
 
 	private double paneWidth;
 	private double paneHeight;
-
-	private final Service service = new Service();
+	private final List<AreteView> piedViews = new ArrayList<>();
+	private final Service service = Service.getInstance();
 	private final Map<String, StationView> stationNodes = new HashMap<>();
 	private final Map<String, String> lineNameToId = new HashMap<>();
 	private final Map<String, AreteView> arreteViews = new HashMap<>();
@@ -145,6 +142,7 @@ public class GraphController {
 		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
 		checkConnexite.setOnAction(e -> verifConnexite());
 		creditsButton.setOnAction(e->showCredits());
+
 		chargerHistorique();
 		rafraichirHistoriqueUI();
 
@@ -224,7 +222,7 @@ public class GraphController {
 			}
 			return changements;
 		}
-	}
+		}
 
 	private void calculerItineraire() {
 		afficherErreur(null);
@@ -245,9 +243,9 @@ public class GraphController {
 		rechercherButton.setDisable(true);
 		rechercherButton.setText("Calcul...");
 
-		javafx.concurrent.Task<ItineraireResultat> tache = new javafx.concurrent.Task<>() {
+		javafx.concurrent.Task<List<ItineraireResultat>> tache = new javafx.concurrent.Task<>() {
 			@Override
-			protected ItineraireResultat call() {
+			protected List<ItineraireResultat> call() {
 				Quai origineQuai = depart.getQuais().get(0);
 				Map<Quai, DistanceAntecedants> distances =
 						backend.algo.Dijkstra.getDistanceAntecedantsMap(graphe, origineQuai);
@@ -257,16 +255,20 @@ public class GraphController {
 				if (infoDestination == null) {
 					return null; // aucun chemin trouve
 				}
+				List<ItineraireResultat> itineraires=new ArrayList<>();
+				itineraires.add(new ItineraireResultat(Service.MeilleurCheminTemps(depart,arrivee), infoDestination.getDistance()));
+				itineraires.add(new ItineraireResultat(Service.MeilleurCheminCorrespondances(depart, arrivee), infoDestination.getDistance()));
+				itineraires.add(new ItineraireResultat(Service.MeilleurCheminCO2(depart, arrivee), infoDestination.getDistance()));
 
-				List<Quai> chemin = backend.algo.MeilleurChemin.MeilleurChemin(distances, depart, arrivee);
-				return new ItineraireResultat(chemin, infoDestination.getDistance());
+				return itineraires;
 			}
 		};
 
 		tache.setOnSucceeded(e -> {
 			rechercherButton.setDisable(false);
 			rechercherButton.setText("Calculer");
-			ItineraireResultat resultat = tache.getValue();
+
+			List<ItineraireResultat> resultat = tache.getValue();
 			afficherResultat(depart, arrivee, resultat);
 			if (resultat != null) {
 				ajouterAHistorique(depart.getNom(), arrivee.getNom());
@@ -377,15 +379,16 @@ public class GraphController {
 		return carte;
 	}
 
-	private void afficherResultat(Station depart, Station arrivee, ItineraireResultat resultat) {
-		if (resultat == null) {
+	private void afficherResultat(Station depart, Station arrivee, List<ItineraireResultat> itineraires) {
+		if (itineraires == null || itineraires.isEmpty()) {
 			afficherErreur("Aucun itinéraire trouvé entre ces deux stations.");
 			return;
 		}
 
+		ItineraireResultat resultat = itineraires.get(0);
+		ItineraireResultat moinsChangements = itineraires.size() > 1 ? itineraires.get(1) : null;
+		ItineraireResultat moinsCO2 = itineraires.size() > 2 ? itineraires.get(2) : null;
 
-		ItineraireResultat moinsChangements = null;
-		ItineraireResultat moinsCO2 = null;
 
 		afficherOptions(depart, arrivee, resultat, moinsChangements, moinsCO2);
 
@@ -452,6 +455,8 @@ public class GraphController {
 			tt.setToX(0);
 			tt.play();
 		} }
+
+
 
 
 	// ---------- Historique ----------
@@ -526,16 +531,20 @@ public class GraphController {
 	}
 
 	private void addArete(Arete arete) {
+
 		Quai source = arete.getSource();
 		Quai destination = arete.getDestination();
+
 		StationView nodeA = stationNodes.get(source.getStation().getId());
 		StationView nodeB = stationNodes.get(destination.getStation().getId());
+		if (nodeA == null || nodeB == null) {return;}
+		String key=arreteKey(source.getId(), destination.getId());
 
-		if (nodeA == null || nodeB == null) {
-			return;
-		}
+
 
 		if (arete.getType() != Arete.Type.pied) {
+			if (arreteViews.containsKey(key)) {return;}
+
 			AreteView arrete = new AreteView(
 					arete,
 					nodeA.getCenterX(), nodeA.getCenterY(),
@@ -543,12 +552,11 @@ public class GraphController {
 					arete.getLigne()
 			);
 
-			String key = arreteKey(source.getId(), destination.getId());
 			arreteViews.put(key, arrete);
 			graphPane.getChildren().add(0, arrete);
 		}
 		else{
-
+			if (corresp.containsKey(key)) return;
 			corresp.put(arreteKey(source.getId(), destination.getId()), arete);
 		}
 	}
@@ -571,6 +579,8 @@ public class GraphController {
 		graphPane.getChildren().clear();
 		stationNodes.clear();
 		arreteViews.clear();
+		corresp.clear();
+		piedViews.clear();
 
 		GeoProjector projector = GeoProjector.fitTo(
 				graphe.getStations(), paneWidth, paneHeight, PADDING
@@ -587,52 +597,111 @@ public class GraphController {
 	}
 
 	public void highlightPath(List<String> quaiIdsOrdonnes) {
-		Map<StationView,List<Arete>> correspMap = new HashMap<>();
-		resetHighlight();
-		Quai quaiDebut = graphe.getQuai(quaiIdsOrdonnes.get(0));
-		Quai quaiFin = graphe.getQuai(quaiIdsOrdonnes.get(quaiIdsOrdonnes.size() - 1));
 
-		for (int i = 1; i < quaiIdsOrdonnes.size(); i++) {
+		resetHighlight();
+		if (quaiIdsOrdonnes == null || quaiIdsOrdonnes.isEmpty()) return;
+
+		Quai quaiDebut = graphe.getQuai(quaiIdsOrdonnes.get(0));
+		Quai quaiFin   = graphe.getQuai(quaiIdsOrdonnes.get(quaiIdsOrdonnes.size() - 1));
+		Map<StationView,List<Arete>> correspMap = new HashMap<>();
+		for (int i = 0; i < quaiIdsOrdonnes.size(); i++) {
 			String quaiId = quaiIdsOrdonnes.get(i);
 			Quai quai = graphe.getQuai(quaiId);
 			if (quai == null) continue;
-
 			StationView node = stationNodes.get(quai.getStation().getId());
 			if (node != null) node.setSelected(true);
-
-
+			if (i == 0) continue;
 			String prevQuaiId = quaiIdsOrdonnes.get(i - 1);
-			AreteView arrete = arreteViews.get(arreteKey(prevQuaiId, quaiId));
+			Quai prevQuai = graphe.getQuai(prevQuaiId);
+			if (prevQuai == null) continue;
 
-			if (arrete == null) {
-				arrete = arreteViews.get(arreteKey(quaiId, prevQuaiId));
-			}
+			String key = arreteKey(prevQuaiId, quaiId);
+			AreteView arrete = arreteViews.get(key);
 
-			if (arrete != null){
+//Distinguer trajet a pied et trajet normal
+			if (arrete != null) {
 				arrete.setHighlighted(true);
+			} else {
+
+				//Trajet a pied : distinguer correspondance et trajet entre stations
+
+				Arete aretePied = corresp.get(key);
+				if (aretePied == null) continue;
+
+				Station stationSrc  = prevQuai.getStation();
+				Station stationDest = quai.getStation();
+
+				if (stationSrc.getId().equals(stationDest.getId())) {
+					//correspondance: vérifier que ce sont bien des lignes différentes
+
+					StationView stNode = stationNodes.get(stationSrc.getId());
+
+					if (stNode != null)
+
+						correspMap.computeIfAbsent(stNode, k -> new ArrayList<>()).add(aretePied);
+
+				} else {
+					//trajet entre stations
+					StationView nodeA = stationNodes.get(stationSrc.getId());
+					StationView nodeB = stationNodes.get(stationDest.getId());
+					if (nodeA != null && nodeB != null) {
+						AreteView piedView = new AreteView(
+								aretePied,
+								nodeA.getCenterX(), nodeA.getCenterY(),
+								nodeB.getCenterX(), nodeB.getCenterY(),
+								true
+						);
+						piedViews.add(piedView);
+						graphPane.getChildren().add(1, piedView);
+						AreteView arete = arreteViews.get(key);
+						if (arete != null) arete.setVisible(false);
+
+						setCorresp(nodeA, nodeB, aretePied);
+					}
+				}
 			}
-			else
-				correspMap.computeIfAbsent(node, k -> new ArrayList<>()).add(corresp.get(arreteKey(prevQuaiId, quaiId)));
-
-
 		}
-		correspMap.forEach((station, arretes) -> {
-			StationPopup  popup=station.getPopup();
-			if (popup == null) {
-				popup = new StationPopup(station.getStation(), station.getCenterX(), station.getCenterY());
-				graphPane.getChildren().add(popup);
-				station.setPopup(popup);
-			}
-			String correspString = parseCorresp(arretes);
-			station.setCorresp(correspString);
-		});
-		stationNodes.get(quaiDebut.getStation().getId()).setStart(true);
-		stationNodes.get(quaiFin.getStation().getId()).setEnd(true);
-		stationNodes.get(quaiFin.getStation().getId()).setSelected(false);
+		correspMap.forEach(this::setCorresp);
+
+
+		if (quaiDebut != null) {
+			StationView debut = stationNodes.get(quaiDebut.getStation().getId());
+			if (debut != null) {debut.setSelected(false);debut.setStart(true);}
+		}
+		if (quaiFin != null) {
+			StationView fin = stationNodes.get(quaiFin.getStation().getId());
+			if (fin != null) { fin.setEnd(true); fin.setSelected(false); }
+		}
 	}
 
+	private void setCorresp(StationView node, List<Arete> aretes) {
+		ouvrirOuMAJPopup(node, parseCorresp(aretes));
+	}
+
+	private void setCorresp(StationView nodeA, StationView nodeB, Arete arete) {
+		int poids = arete.getPoid();
+		String duree = poids >= 60 ? Math.round(poids / 60f) + " min" : poids + " s";
+		String texte = "Marche de " + nodeA.getStation().getNom()
+				+ " a " + nodeB.getStation().getNom() + " : " + duree;
+		ouvrirOuMAJPopup(nodeA, texte);
+		ouvrirOuMAJPopup(nodeB, texte);
+	}
+
+	private void ouvrirOuMAJPopup(StationView node, String texte) {
+		StationPopup popup = node.getPopup();
+		if (popup == null) {
+			popup = new StationPopup(node.getStation(), node.getCenterX(), node.getCenterY());
+			graphPane.getChildren().add(popup);
+			node.setPopup(popup);
+		}
+		popup.setVisible(true);
+		popup.setCorresp(texte);
+		node.setCorresp(texte);
+	}
+
+
 	private String arreteKey(String sourceQuaiId, String destQuaiId) {
-		return sourceQuaiId + "->" + destQuaiId;
+		return sourceQuaiId.compareTo(destQuaiId) <= 0 ? sourceQuaiId + "<>" + destQuaiId : destQuaiId + "<>" + sourceQuaiId;
 	}
 
 	public void highlightLine(String line) {
@@ -641,20 +710,33 @@ public class GraphController {
 				e.getArete().getLigne() != null && e.getArete().getLigne().getId().equals(line)));
 	}
 
-	public String parseCorresp(List<Arete> corresps){
-		Quai depart=corresps.get(0).getSource();
-		Quai arrive=corresps.get(corresps.size()-1).getDestination();
+	public String parseCorresp(List<Arete> corresps) {
 
 		int poids = corresps.stream().mapToInt(Arete::getPoid).sum();
+		String duree = poids >= 60 ? Math.round(poids / 60f) + " min" : poids + " s";
 
-		if (poids>=60)poids=Math.round(poids / 60f);
-		return depart.getLigne().getNom()+"->"+arrive.getLigne().getNom()+": "+poids+"min";
+		java.util.Set<String> lignes = new java.util.LinkedHashSet<>();
+		for (Arete a : corresps) {
+			if (a.getSource().getLigne() != null)
+				lignes.add(a.getSource().getLigne().getNom());
+			if (a.getDestination().getLigne() != null)
+				lignes.add(a.getDestination().getLigne().getNom());
+		}
+		List<String> lignesList = new ArrayList<>(lignes);
+		String depart = lignesList.get(0);
+		String arrivee = lignesList.get(lignesList.size() - 1);
+		return depart + " → " + arrivee + " : " + duree;
 	}
+
 
 	public void resetHighlight(){
 		stationNodes.values().forEach(n -> {n.setSelected(false); n.setStart(false);n.setEnd(false);n.setCorresp("");});
-		arreteViews.values().forEach(e -> e.setHighlighted(false));
-
+		arreteViews.values().forEach(e -> {
+			e.setHighlighted(false);
+			e.setVisible(true);
+		});
+		piedViews.forEach(p -> graphPane.getChildren().remove(p));
+		piedViews.clear();
 	}
 
 

@@ -3,58 +3,107 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3b9aed9-b83d-46c0-a540-076ca3c35df2" name="Changes" comment="" />
+    <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="Adding credits">
+      <change afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/TrajetDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/AreteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/AreteView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationPopup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationPopup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/views/StationView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Appli.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Appli.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/AnalyseGraphTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/AnalyseGraphTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/DijkstraTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/DijkstraTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/KruskalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/KruskalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/backend/algo/MeilleurCheminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/backend/algo/MeilleurCheminTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/user/Documents/Cours/Mastercamp/SolutionDelivery" value="3Fwl4trB6am6hYqfSgbtyNcLbj0" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;natio94&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/natio94/SolutionDelivery.git&quot;,
+    &quot;accountId&quot;: &quot;640b38e8-c526-45aa-a545-e2b6b5a396c6&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7,
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3Fwl4trB6am6hYqfSgbtyNcLbj0" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Ask" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.SolutionDelivery [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.SolutionDelivery [clean].executor": "Run",
+    "Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
+    "Maven.SolutionDelivery [package].executor": "Run",
+    "Maven.SolutionDelivery [test].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn package" />
     </option>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="SolutionDelivery" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="SolutionDelivery" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -65,7 +114,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1782993825510</updated>
+      <workItem from="1783242494931" duration="1612000" />
+      <workItem from="1783247200400" duration="20401000" />
     </task>
+    <task id="LOCAL-00001" summary="Adding credits">
+      <option name="closed" value="true" />
+      <created>1783170363921</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1783170363921</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding credits" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding credits" />
   </component>
 </project>
