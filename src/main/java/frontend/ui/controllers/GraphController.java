@@ -36,8 +36,17 @@ public class GraphController {
 	@FXML
 	private Button checkConnexite;
 
+
+	@FXML
+	private MenuItem connexiteMenuItem;
+
+	@FXML
+	private MenuItem creditsMenuItem;
+
+
 	@FXML
 	private VBox creditsPane;
+
 
 	// Panels
 
@@ -74,6 +83,12 @@ public class GraphController {
 
 	@FXML
 	private Label resultatDetailLabel;
+
+	@FXML
+	private VBox detailItineraireBox;
+
+	@FXML
+	private VBox detailEtapesBox;
 
 	@FXML
 	private VBox optionsBox;
@@ -152,9 +167,16 @@ public class GraphController {
 		rechercherButton.setOnAction(e -> calculerItineraire());
 		echangerButton.setOnAction(e -> echangerDepartArrivee());
 
+
 		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
 		checkConnexite.setOnAction(e -> verifConnexite());
 		creditsButton.setOnAction(e->showCredits());
+
+
+		acpmMenuItem.setOnAction(e -> showACPM(acpmMenuItem.isSelected()));
+		connexiteMenuItem.setOnAction(e -> verifConnexite());
+		creditsMenuItem.setOnAction(e -> showCredits());
+
 
 		chargerHistorique();
 		rafraichirHistoriqueUI();
@@ -223,14 +245,37 @@ public class GraphController {
 		arriveField.setText(depart);
 	}
 
+
 	private record ItineraireResultat(Chemin chemin, double dureeSecondes, int changements, double co2Grammes) {
 	    List<Quai> quais() { return chemin.cheminQuai(); }
 	}
+
+	/** Resultat local du calcul d'itineraire (pas besoin d'une classe dediee cote backend). */
+	private record ItineraireResultat(List<Quai> quais, int distanceTotale) {
+		int nombreChangements() {
+			int changements = 0;
+			for (int i = 1; i < quais.size(); i++) {
+				Ligne a = quais.get(i).getLigne();
+				Ligne b = quais.get(i - 1).getLigne();
+				if (a != null && b != null && !a.getId().equals(b.getId())) {
+					changements++;
+				}
+			}
+			return changements;
+		}
+
+	private record ItineraireResultat(Chemin chemin, double dureeSecondes, int changements, double co2Grammes) {
+		List<Quai> quais() { return chemin.cheminQuai(); }
+	}
+
+	private record EtapeDetail(String icone, String titre, String sousTitre, String duree) {}
+
 	private ItineraireResultat creerResultat(Chemin chemin) {
 		double duree = Service.getCheminTemps(chemin);
 		int changements = (int) Math.round(Service.getCheminNbCorrespondances(chemin));
 		double co2 = Service.getCheminCO2(chemin);
 		return new ItineraireResultat(chemin, duree, changements, co2);
+
 	}
 
 	private void calculerItineraire() {
@@ -321,6 +366,7 @@ public class GraphController {
 			List<String> ids = plusRapide.quais().stream()
 					.map(Quai::getId).collect(Collectors.toList());
 			highlightPath(ids);
+			afficherDetailItineraire(plusRapide.chemin());
 		}
 	}
 
@@ -380,10 +426,98 @@ public class GraphController {
 						+ "  ·  " + resultat.changements() + " changement(s)");
 				resultatBox.setVisible(true);
 				resultatBox.setManaged(true);
+
+				afficherDetailItineraire(resultat.chemin());
 			});
 		}
 
 		return carte;
+	}
+
+
+
+	private String formaterDuree(double secondes) {
+		return secondes >= 60 ? Math.round(secondes / 60f) + " min" : Math.round(secondes) + " s";
+	}
+
+	private List<EtapeDetail> genererEtapes(Chemin chemin) {
+		List<EtapeDetail> etapes = new ArrayList<>();
+		List<Quai> quais = chemin.cheminQuai();
+		List<Arete> aretes = chemin.cheminArete();
+
+		int i = 0;
+		while (i < aretes.size()) {
+			Arete arete = aretes.get(i);
+
+			if (arete.getType() == Arete.Type.metro) {
+				Ligne ligne = arete.getDestination().getLigne();
+				double duree = 0;
+				int j = i;
+				while (j < aretes.size()
+						&& aretes.get(j).getType() == Arete.Type.metro
+						&& ligne.equals(aretes.get(j).getDestination().getLigne())) {
+					duree += aretes.get(j).getPoid();
+					j++;
+				}
+				Station depStation = quais.get(i).getStation();
+				Station finStation = quais.get(j).getStation();
+				etapes.add(new EtapeDetail("🚇", "Ligne " + ligne.getNom(),
+						depStation.getNom() + " → " + finStation.getNom(), formaterDuree(duree)));
+				i = j;
+			} else {
+				Station depStation = quais.get(i).getStation();
+				Station finStation = quais.get(i + 1).getStation();
+				double duree = arete.getPoid();
+				if (depStation.getId().equals(finStation.getId())) {
+					etapes.add(new EtapeDetail("🔁", "Correspondance", depStation.getNom(), formaterDuree(duree)));
+				} else {
+					etapes.add(new EtapeDetail("🚶", "Marche",
+							depStation.getNom() + " → " + finStation.getNom(), formaterDuree(duree)));
+				}
+				i++;
+			}
+		}
+		return etapes;
+	}
+
+	private void afficherDetailItineraire(Chemin chemin) {
+		detailEtapesBox.getChildren().clear();
+
+		List<EtapeDetail> etapes = genererEtapes(chemin);
+		for (int idx = 0; idx < etapes.size(); idx++) {
+			EtapeDetail etape = etapes.get(idx);
+
+			javafx.scene.layout.HBox ligne = new javafx.scene.layout.HBox(10);
+			ligne.getStyleClass().add("detail-etape");
+			ligne.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+			javafx.scene.control.Label icone = new javafx.scene.control.Label(etape.icone());
+			icone.getStyleClass().add("detail-etape-icone");
+
+			javafx.scene.layout.VBox texte = new javafx.scene.layout.VBox(1);
+			javafx.scene.control.Label titre = new javafx.scene.control.Label(etape.titre());
+			titre.getStyleClass().add("detail-etape-titre");
+			javafx.scene.control.Label sousTitre = new javafx.scene.control.Label(etape.sousTitre());
+			sousTitre.getStyleClass().add("detail-etape-sous");
+			sousTitre.setWrapText(true);
+			texte.getChildren().addAll(titre, sousTitre);
+			javafx.scene.layout.HBox.setHgrow(texte, javafx.scene.layout.Priority.ALWAYS);
+
+			javafx.scene.control.Label duree = new javafx.scene.control.Label(etape.duree());
+			duree.getStyleClass().add("detail-etape-duree");
+
+			ligne.getChildren().addAll(icone, texte, duree);
+			detailEtapesBox.getChildren().add(ligne);
+
+			if (idx < etapes.size() - 1) {
+				javafx.scene.control.Separator sep = new javafx.scene.control.Separator();
+				sep.getStyleClass().add("detail-separateur");
+				detailEtapesBox.getChildren().add(sep);
+			}
+		}
+
+		detailItineraireBox.setVisible(true);
+		detailItineraireBox.setManaged(true);
 	}
 
 	private void afficherResultat(Station depart, Station arrivee, List<ItineraireResultat> itineraires) {
@@ -436,6 +570,8 @@ public class GraphController {
 		if (affiche) {
 			resultatBox.setVisible(false);
 			resultatBox.setManaged(false);
+			detailItineraireBox.setVisible(false);
+			detailItineraireBox.setManaged(false);
 		}
 	}
 

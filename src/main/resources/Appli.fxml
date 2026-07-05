@@ -26,10 +26,22 @@
 
          <Region HBox.hgrow="ALWAYS"/>
 
+
          <Button fx:id="menuButton" styleClass="entete-menu" text="≡"/>
          <ToggleButton fx:id="toggleAPCM" styleClass="entete-menu" text="ACPM"/>
          <Button fx:id="checkConnexite" styleClass="entete-menu" text="Connexité"/>
          <Button fx:id="creditsButton" styleClass="entete-menu" text="Crédits"/>
+
+
+         <MenuButton fx:id="menuButton" styleClass="entete-menu" text="≡">
+            <items>
+               <CheckMenuItem fx:id="acpmMenuItem" text="Afficher l'ACPM" />
+               <MenuItem fx:id="connexiteMenuItem" text="Vérifier la connexité" />
+               <MenuItem fx:id="creditsMenuItem" text="Crédits" />
+            </items>
+         </MenuButton>
+
+
 
       </HBox>
    </top>
@@ -92,6 +104,13 @@
                <Label fx:id="resultatTempsLabel" styleClass="resultat-temps" />
                <Label fx:id="resultatDetailLabel" styleClass="resultat-detail" wrapText="true" HBox.hgrow="ALWAYS" />
             </HBox>
+
+            <VBox fx:id="detailItineraireBox" managed="false" spacing="8" styleClass="detail-itineraire" visible="false">
+               <Label styleClass="detail-titre" text="Détail de l'itinéraire" />
+               <ScrollPane fitToWidth="true" maxHeight="220" styleClass="detail-scroll">
+                  <VBox fx:id="detailEtapesBox" spacing="0" styleClass="detail-etapes" />
+               </ScrollPane>
+            </VBox>
          </VBox>
 
          <Pane fx:id="viewportPane" styleClass="viewport" VBox.vgrow="ALWAYS">

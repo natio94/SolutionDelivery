@@ -52,6 +52,16 @@
     -fx-cursor: hand;
 }
 
+.entete-menu .arrow-button {
+    -fx-padding: 0;
+    -fx-graphic-text-gap: 0;
+}
+
+.entete-menu .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 /* ---------- Options d'itinéraires ---------- */
 
 .option-carte {
@@ -288,6 +298,64 @@
 .resultat-detail {
     -fx-font-size: 12px;
     -fx-text-fill: #C7CEDD;
+}
+
+/* ---------- Détail de l'itinéraire ---------- */
+
+.detail-itineraire {
+    -fx-background-color: #FCFAF4;
+    -fx-background-radius: 8px;
+    -fx-border-color: #E8E1CC;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px 14px;
+}
+
+.detail-titre {
+    -fx-font-family: "Arial Black", "Arial Bold", "Helvetica Neue", sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14213D;
+}
+
+.detail-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-width: 0;
+}
+
+.detail-etapes {
+    -fx-background-color: transparent;
+}
+
+.detail-etape {
+    -fx-padding: 6px 2px;
+}
+
+.detail-etape-icone {
+    -fx-font-size: 15px;
+    -fx-min-width: 22px;
+    -fx-alignment: center;
+}
+
+.detail-etape-titre {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14213D;
+}
+
+.detail-etape-sous {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6E6555;
+}
+
+.detail-etape-duree {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-text-fill: #8A8170;
+}
+
+.detail-separateur {
+    -fx-padding: 0 0 0 32px;
 }
 
 .champ-mini-label {
