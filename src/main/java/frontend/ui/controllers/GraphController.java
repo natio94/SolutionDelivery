@@ -28,11 +28,13 @@ public class GraphController {
 	private CheckMenuItem acpmMenuItem;
 	@FXML
 	private ToggleButton toggleAPCM;
-	@FXML
-	private Button checkConnexite;
+
 
 	@FXML
 	private Button creditsButton;
+
+	@FXML
+	private Button checkConnexite;
 
 	@FXML
 	private VBox creditsPane;
@@ -213,19 +215,15 @@ public class GraphController {
 		arriveField.setText(depart);
 	}
 
-	private record ItineraireResultat(List<Quai> quais, int distanceTotale) {
-		int nombreChangements() {
-			int changements = 0;
-			for (int i = 1; i < quais.size(); i++) {
-				Ligne a = quais.get(i).getLigne();
-				Ligne b = quais.get(i - 1).getLigne();
-				if (a != null && b != null && !a.getId().equals(b.getId())) {
-					changements++;
-				}
-			}
-			return changements;
-		}
-		}
+	private record ItineraireResultat(Chemin chemin, double dureeSecondes, int changements, double co2Grammes) {
+	    List<Quai> quais() { return chemin.cheminQuai(); }
+	}
+	private ItineraireResultat creerResultat(Chemin chemin) {
+		double duree = Service.getCheminTemps(chemin);
+		int changements = (int) Math.round(Service.getCheminNbCorrespondances(chemin));
+		double co2 = Service.getCheminCO2(chemin);
+		return new ItineraireResultat(chemin, duree, changements, co2);
+	}
 
 	private void calculerItineraire() {
 		afficherErreur(null);
@@ -258,11 +256,10 @@ public class GraphController {
 				if (infoDestination == null) {
 					return null; // aucun chemin trouve
 				}
-				List<ItineraireResultat> itineraires=new ArrayList<>();
-				itineraires.add(new ItineraireResultat(Service.MeilleurCheminTemps(depart,arrivee), infoDestination.getDistance()));
-				itineraires.add(new ItineraireResultat(Service.MeilleurCheminCorrespondances(depart, arrivee), infoDestination.getDistance()));
-				itineraires.add(new ItineraireResultat(Service.MeilleurCheminCO2(depart, arrivee), infoDestination.getDistance()));
-
+				List<ItineraireResultat> itineraires = new ArrayList<>();
+				itineraires.add(creerResultat(Service.MeilleurCheminTemps(depart, arrivee)));
+				itineraires.add(creerResultat(Service.MeilleurCheminCorrespondances(depart, arrivee)));
+				itineraires.add(creerResultat(Service.MeilleurCheminCO2(depart, arrivee)));
 				return itineraires;
 			}
 		};
@@ -294,9 +291,9 @@ public class GraphController {
 
 
 	private void afficherOptions(Station depart, Station arrivee,
-								 ItineraireResultat plusRapide,
-								 ItineraireResultat moinsChangements,
-								 ItineraireResultat moinsCO2) {
+	                             ItineraireResultat plusRapide,
+	                             ItineraireResultat moinsChangements,
+	                             ItineraireResultat moinsCO2) {
 
 		optionsBox.getChildren().clear();
 
@@ -340,8 +337,7 @@ public class GraphController {
 			labelNA.getStyleClass().add("option-na");
 			carte.getChildren().add(labelNA);
 		} else {
-			int minutes = Math.round(resultat.distanceTotale() / 60f);
-			double co2 = Math.round(minutes * 0.4);
+			int minutes = Math.toIntExact(Math.round(resultat.dureeSecondes() / 60f));
 
 			javafx.scene.layout.HBox metriques = new javafx.scene.layout.HBox(10);
 
@@ -349,11 +345,11 @@ public class GraphController {
 			lTemps.getStyleClass().add("option-metrique");
 
 			javafx.scene.control.Label lChangements = new javafx.scene.control.Label(
-					"🔁 " + resultat.nombreChangements() + " chgt");
+					"🔁 " + resultat.changements() + " chgt");
 			lChangements.getStyleClass().add("option-metrique");
 
 			javafx.scene.control.Label lCo2 = new javafx.scene.control.Label(
-					"🌿 ~" + (int) co2 + " g");
+					"🌿 ~" + Math.round(resultat.co2Grammes()) + " g");
 			lCo2.getStyleClass().add("option-metrique");
 
 			metriques.getChildren().addAll(lTemps, lChangements, lCo2);
@@ -370,10 +366,10 @@ public class GraphController {
 						.map(Quai::getId).collect(Collectors.toList());
 				highlightPath(ids);
 
-				int min = Math.round(resultat.distanceTotale() / 60f);
+				int min = Math.toIntExact(Math.round(resultat.dureeSecondes() / 60f));
 				resultatTempsLabel.setText(min + " min");
 				resultatDetailLabel.setText(depart.getNom() + " → " + arrivee.getNom()
-						+ "  ·  " + resultat.nombreChangements() + " changement(s)");
+						+ "  ·  " + resultat.changements() + " changement(s)");
 				resultatBox.setVisible(true);
 				resultatBox.setManaged(true);
 			});
@@ -395,10 +391,10 @@ public class GraphController {
 
 		afficherOptions(depart, arrivee, resultat, moinsChangements, moinsCO2);
 
-		int minutes = Math.round(resultat.distanceTotale() / 60f);
+		int minutes = Math.toIntExact(Math.round(resultat.dureeSecondes() / 60f));
 		resultatTempsLabel.setText(minutes + " min");
 		resultatDetailLabel.setText(depart.getNom() + " → " + arrivee.getNom()
-				+ "  ·  " + resultat.nombreChangements() + " changement(s)");
+				+ "  ·  " + resultat.changements() + " changement(s)");
 		resultatBox.setVisible(true);
 		resultatBox.setManaged(true);
 	}
@@ -682,7 +678,7 @@ public class GraphController {
 	}
 
 	private void setCorresp(StationView nodeA, StationView nodeB, Arete arete) {
-		int poids = arete.getPoid();
+		double poids = arete.getPoid();
 		String duree = poids >= 60 ? Math.round(poids / 60f) + " min" : poids + " s";
 		String texte = "Marche de " + nodeA.getStation().getNom()
 				+ " a " + nodeB.getStation().getNom() + " : " + duree;
@@ -715,7 +711,7 @@ public class GraphController {
 
 	public String parseCorresp(List<Arete> corresps) {
 
-		int poids = corresps.stream().mapToInt(Arete::getPoid).sum();
+		double poids = corresps.stream().mapToDouble(Arete::getPoid).sum();
 		String duree = poids >= 60 ? Math.round(poids / 60f) + " min" : poids + " s";
 
 		java.util.Set<String> lignes = new java.util.LinkedHashSet<>();

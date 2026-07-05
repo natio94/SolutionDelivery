@@ -30,6 +30,7 @@
          <ToggleButton fx:id="toggleAPCM" styleClass="entete-menu" text="ACPM"/>
          <Button fx:id="checkConnexite" styleClass="entete-menu" text="Connexité"/>
          <Button fx:id="creditsButton" styleClass="entete-menu" text="Crédits"/>
+
       </HBox>
    </top>
 
