@@ -15,7 +15,7 @@ public class Service {
     private final Graphe grapheCorrespondances;
     private final Graphe grapheCO2;
 
-    private Service() {
+    public Service() {
 	ConstructeurGraphe constructeur = new ConstructeurGraphe();
         this.graphe = constructeur.buildGraph();
         this.grapheCorrespondances = constructeur.buildGraphCorrespondances();
