@@ -163,7 +163,7 @@ class DijkstraTest {
 		Map<Quai, DistanceAntecedants> results = Dijkstra.getDistanceAntecedantsMap(g, q1);
 
 		assertEquals(10, results.get(q3).getDistance());
-		List<Quai> antecedants = results.get(q3).getAntecedants();
+		List<Quai> antecedants = results.get(q3).getAntecedantsQuai();
 		assertEquals(2, antecedants.size());
 		assertTrue(antecedants.contains(q1));
 		assertTrue(antecedants.contains(q2));
@@ -187,7 +187,7 @@ class DijkstraTest {
 		Map<Quai, DistanceAntecedants> results = Dijkstra.getDistanceAntecedantsMap(g, q1);
 
 		assertEquals(2, results.get(q3).getDistance());
-		assertTrue(results.get(q3).getAntecedants().contains(q2));
+		assertTrue(results.get(q3).getAntecedantsQuai().contains(q2));
 	}
 
 	@Test

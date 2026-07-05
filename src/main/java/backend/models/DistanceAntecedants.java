@@ -6,30 +6,39 @@ import java.util.*;
 
 public class DistanceAntecedants {
 	private Integer distance;
-	private List<Quai> antecedants;
+	private List<Quai> antecedantsQuai;
+	private List<Arete> antecedantsArete;
 
-	public DistanceAntecedants(Integer distance, Quai antecedant) {
+	public DistanceAntecedants(Integer distance, Quai antecedantQuai, Arete antecedantArete) {
 		this.distance = distance;
-		this.antecedants = new ArrayList();
-		this.antecedants.add(antecedant);
+		this.antecedantsQuai = new ArrayList<>();
+		this.antecedantsArete = new ArrayList<>();
+		this.antecedantsQuai.add(antecedantQuai);
+		this.antecedantsArete.add(antecedantArete);
 	}
-	public DistanceAntecedants(Integer distance, List<Quai> antecedants) {
+	public DistanceAntecedants(Integer distance, List<Quai> antecedantsQuai, List<Quai> antecedantsArete) {
 		this.distance = distance;
-		this.antecedants = new ArrayList(antecedants);
+		this.antecedantsQuai = new ArrayList(antecedantsQuai);
+		this.antecedantsArete = new ArrayList(antecedantsArete);
 	}
 
 	public Integer getDistance() {
 		return this.distance;
 	}
-	public List<Quai> getAntecedants() {
-		return this.antecedants;
+	public List<Quai> getAntecedantsQuai() {
+		return this.antecedantsQuai;
+	}
+	public List<Arete> getAntecedantsArete() {
+		return this.antecedantsArete;
 	}
 
 	public void setDistance(Integer distance) {
 		this.distance = distance;
 	}
-	public void setAntecedants(Quai antecedant) {
-		this.antecedants.clear();
-		this.antecedants.add(antecedant);
+	public void setAntecedants(Quai antecedantQuai, Arete antecedantArete) {
+		this.antecedantsQuai.clear();
+		this.antecedantsArete.clear();
+		this.antecedantsQuai.add(antecedantQuai);
+		this.antecedantsArete.add(antecedantArete);
 	}
 }

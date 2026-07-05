@@ -65,13 +65,13 @@ public class Service {
         return AnalyseGraph.estConnexeStations(graphe.getStations());
     }
 
-    public static List<Quai> MeilleurCheminTemps(Station origin, Station destination) {
+    public static Chemin MeilleurCheminTemps(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminTemps(origin, destination);
     }
-    public static List<Quai> MeilleurCheminCorrespondances(Station origin, Station destination) {
+    public static Chemin MeilleurCheminCorrespondances(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCorrespondances(origin, destination);
     }
-    public static List<Quai> MeilleurCheminCO2(Station origin, Station destination) {
+    public static Chemin MeilleurCheminCO2(Station origin, Station destination) {
 	    return MeilleurChemin.MeilleurCheminCO2(origin, destination);
     }
 }

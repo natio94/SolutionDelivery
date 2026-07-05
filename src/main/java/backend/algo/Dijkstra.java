@@ -8,8 +8,9 @@ public class Dijkstra {
 	public static Map<Quai, DistanceAntecedants> getDistanceAntecedantsMap(Graphe graph, Quai origin) {
 		// initialization
 		Map<Quai, DistanceAntecedants> distanceAntecedantsMap = new HashMap<>();
-		Quai antecedant = null;
-		distanceAntecedantsMap.put(origin, new DistanceAntecedants(0, antecedant));
+		Quai antecedantQuai = null;
+		Arete antecedantArete = null;
+		distanceAntecedantsMap.put(origin, new DistanceAntecedants(0, antecedantQuai, antecedantArete));
 		Comparator<Quai> compareByDistance = (Quai quai1, Quai quai2) -> {
 			if (distanceAntecedantsMap.get(quai1) == null && distanceAntecedantsMap.get(quai2) == null) {
 				return 0;
@@ -33,8 +34,8 @@ public class Dijkstra {
 				Quai voisin = arete.getDestination();
 				if (distanceAntecedantsMap.get(voisin) == null) {
 					Integer distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
-					antecedant = currentQuai;
-					distanceAntecedantsMap.put(voisin, new DistanceAntecedants(distance, antecedant));
+					antecedantQuai = currentQuai;
+					distanceAntecedantsMap.put(voisin, new DistanceAntecedants(distance, antecedantQuai, arete));
 					// update the ordering of the unvisited set
 					unvisited.remove(voisin);
 					unvisited.add(voisin);
@@ -42,17 +43,18 @@ public class Dijkstra {
 					distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid() < distanceAntecedantsMap.get(voisin).getDistance()
 					) {
 					Integer distance = distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid();
-					antecedant = currentQuai;
+					antecedantQuai = currentQuai;
 					distanceAntecedantsMap.get(voisin).setDistance(distance);
-					distanceAntecedantsMap.get(voisin).setAntecedants(antecedant);
+					distanceAntecedantsMap.get(voisin).setAntecedants(antecedantQuai, arete);
 					// update the ordering of the unvisited set
 					unvisited.remove(voisin);
 					unvisited.add(voisin);
 				} else if (
 					distanceAntecedantsMap.get(currentQuai).getDistance() + arete.getPoid() == distanceAntecedantsMap.get(voisin).getDistance()
 					  ) {
-					antecedant = currentQuai;
-					distanceAntecedantsMap.get(voisin).getAntecedants().add(antecedant);
+					antecedantQuai = currentQuai;
+					distanceAntecedantsMap.get(voisin).getAntecedantsQuai().add(antecedantQuai);
+					distanceAntecedantsMap.get(voisin).getAntecedantsArete().add(arete);
 				}
 			}
 		}
