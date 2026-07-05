@@ -5,43 +5,41 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
-
 <BorderPane prefHeight="800.0" prefWidth="1280.0" styleClass="racine" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.ui.controllers.GraphController">
 
    <!-- ===== En-tête ===== -->
    <top>
       <HBox alignment="CENTER_LEFT" spacing="10" styleClass="entete-haut">
          <padding>
-            <Insets bottom="12" left="20" right="20" top="12"/>
+            <Insets bottom="12" left="20" right="20" top="12" />
          </padding>
 
-         <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
             <image>
-               <Image url="@/images/logo.png"/>
+               <Image url="@/images/logo.png" />
             </image>
          </ImageView>
 
-         <Label text="CARPE" styleClass="entete-titre"/>
+         <Label styleClass="entete-titre" text="CARPE" />
 
-         <Region HBox.hgrow="ALWAYS"/>
+         <Region HBox.hgrow="ALWAYS" />
 
 
-         <MenuButton fx:id="menuButton" styleClass="entete-menu" text="≡">
+         <MenuButton fx:id="menuButton" styleClass="entete-menu" text="≡" textFill="WHITE">
             <items>
                <CheckMenuItem fx:id="acpmMenuItem" text="Afficher l'ACPM" />
                <MenuItem fx:id="connexiteMenuItem" text="Vérifier la connexité" />
                <MenuItem fx:id="creditsMenuItem" text="Crédits" />
+               <MenuItem fx:id="resetHistoriqueMenuItem" text="Réinitialiser l'historique" />
             </items>
          </MenuButton>
-
-
 
       </HBox>
    </top>
 
    <!-- ===== Barre latérale ===== -->
    <left>
+      <HBox>
       <VBox prefWidth="300.0" spacing="22" styleClass="barre-laterale">
          <padding>
             <Insets bottom="20" left="18" right="18" top="20" />
@@ -53,15 +51,7 @@
             <VBox fx:id="optionsBox" managed="false" spacing="8" visible="false" />
          </VBox>
 
-         <VBox spacing="10" styleClass="bloc-lateral">
-            <Label styleClass="bloc-titre" text="Détail de l'itinéraire" />
-            <Label fx:id="detailVideLabel" styleClass="bloc-note" text="Sélectionnez un itinéraire pour voir le détail." wrapText="true" />
-            <VBox fx:id="detailItineraireBox" managed="false" spacing="0" visible="false">
-               <ScrollPane fitToWidth="true" maxHeight="260" styleClass="detail-scroll">
-                  <VBox fx:id="detailEtapesBox" spacing="0" styleClass="detail-etapes" />
-               </ScrollPane>
-            </VBox>
-         </VBox>
+
 
          <VBox spacing="10" styleClass="bloc-lateral" VBox.vgrow="ALWAYS">
             <Label styleClass="bloc-titre" text="Historique" />
@@ -69,6 +59,16 @@
             <Label fx:id="historiqueVideLabel" styleClass="bloc-note" text="Vos trajets récents apparaîtront ici." wrapText="true" />
          </VBox>
       </VBox>
+         <VBox spacing="10" styleClass="bloc-lateral">
+            <Label styleClass="bloc-titre" text="Détail de l'itinéraire" />
+            <Label fx:id="detailVideLabel" styleClass="bloc-note" text="Sélectionnez un itinéraire pour voir le détail." wrapText="true" />
+            <VBox fx:id="detailItineraireBox" managed="false" visible="false">
+               <ScrollPane fitToWidth="true" styleClass="detail-scroll">
+                  <VBox fx:id="detailEtapesBox" styleClass="detail-etapes" />
+               </ScrollPane>
+            </VBox>
+         </VBox>
+      </HBox>
    </left>
 
    <!-- ===== Zone centrale : recherche + carte ===== -->
@@ -118,16 +118,16 @@
    </center>
 
    <right>
-      <VBox fx:id="creditsPane" spacing="12" visible="false" managed="false" prefWidth="320" >
-         <padding><Insets top="20" right="16" left="16" bottom="20"/></padding>
+      <VBox fx:id="creditsPane" managed="false" prefWidth="320" spacing="12" visible="false">
+         <padding><Insets bottom="20" left="16" right="16" top="20" /></padding>
          <HBox alignment="CENTER_RIGHT">
-            <Button text="✕" onAction="#showCredits"  />
+            <Button onAction="#showCredits" text="✕" />
          </HBox>
-         <Label  text="Crédits" />
-         <Label text="CARPE - SolutionDelivery" wrapText="true"/>
-         <Label text="Développé par: Mathis BUCLON, Nathan CORNUAU, Ayuna CHAMPAIN, Karel BOU FERRAA, Noham BOULANOUAR" wrapText="true"/>
+         <Label text="Crédits" />
+         <Label text="CARPE - SolutionDelivery" wrapText="true" />
+         <Label text="Développé par: Mathis BUCLON, Nathan CORNUAU, Ayuna CHAMPAIN, Karel BOU FERRAA, Noham BOULANOUAR" wrapText="true" />
          <Label text="Version: 1.0" />
-         <Label wrapText="true" text="Données : Portail Open Data IDFM. Format GTFS. Datée de octobre 2024. Les fichiers ont été traités et nettoyés pour garder seulement les informations liées au métro" />
+         <Label text="Données : Portail Open Data IDFM. Format GTFS. Datée de octobre 2024. Les fichiers ont été traités et nettoyés pour garder seulement les informations liées au métro" wrapText="true" />
          <Region VBox.vgrow="ALWAYS" />
       </VBox>
    </right>

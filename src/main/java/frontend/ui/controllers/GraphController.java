@@ -7,13 +7,11 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
-import javafx.geometry.Side;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +22,9 @@ import java.util.stream.Collectors;
 
 public class GraphController {
 
-	@FXML private MenuButton menuButton;
+	@FXML
+	public MenuItem resetHistoriqueMenuItem;
+
 	@FXML
 	private CheckMenuItem acpmMenuItem;
 
@@ -125,7 +125,7 @@ public class GraphController {
 			this.graphe = service.getGraphe();
 		} catch (Exception e) {
 			afficherErreurChargement(e);
-			return; // stopper initialize() proprement, l'UI restera vide mais stable
+			return;
 		}
 
 
@@ -165,7 +165,7 @@ public class GraphController {
 		acpmMenuItem.setOnAction(e -> showACPM(acpmMenuItem.isSelected()));
 		connexiteMenuItem.setOnAction(e -> verifConnexite());
 		creditsMenuItem.setOnAction(e -> showCredits());
-
+		resetHistoriqueMenuItem.setOnAction(e -> deleteHistorique());
 
 		chargerHistorique();
 		rafraichirHistoriqueUI();
@@ -456,7 +456,8 @@ public class GraphController {
 
 	private void afficherDetailItineraire(Chemin chemin) {
 		detailEtapesBox.getChildren().clear();
-
+		detailEtapesBox.setManaged(true);
+		detailEtapesBox.setVisible(true);
 		List<EtapeDetail> etapes = genererEtapes(chemin);
 		for (int idx = 0; idx < etapes.size(); idx++) {
 			EtapeDetail etape = etapes.get(idx);
@@ -645,6 +646,16 @@ public class GraphController {
 				historique.addAll(Files.readAllLines(FICHIER_HISTORIQUE));
 			}
 		} catch (IOException ignored) {
+		}
+	}
+
+	private void deleteHistorique(){
+		try {
+			Files.deleteIfExists(FICHIER_HISTORIQUE);
+			historique.clear();
+			rafraichirHistoriqueUI();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

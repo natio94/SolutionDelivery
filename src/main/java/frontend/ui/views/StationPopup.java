@@ -14,7 +14,12 @@ public class StationPopup extends VBox {
 	public StationPopup(Station station,double x, double y ) {
 		super();
 
-		this.setStyle("-fx-border-color: #333; -fx-border-width: 1; -fx-padding: 10; -fx-background-color: #f9f9f9;");
+		this.setStyle(
+				"-fx-border-color: #333;" +
+						"-fx-border-width: 1;" +
+						"-fx-padding: 10;" +
+						"-fx-background-color: rgba(249, 249, 249, 0.85);"
+		);
 		this.setPrefWidth(180);
 
 		Label nameLabel = new Label(station.getNom());
