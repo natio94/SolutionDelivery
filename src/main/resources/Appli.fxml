@@ -9,21 +9,22 @@
 
    <!-- ===== En-tête ===== -->
    <top>
-      <HBox alignment="CENTER_LEFT" spacing="14" styleClass="entete-haut">
+      <HBox alignment="CENTER_LEFT" spacing="10" styleClass="entete-haut">
          <padding>
-            <Insets bottom="12" left="20" right="20" top="12" />
+            <Insets bottom="12" left="20" right="20" top="12"/>
          </padding>
 
-         <ImageView fitHeight="34" fitWidth="34" preserveRatio="true">
-
-               <Image url="@images/icon.ico" />
-
+         <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+            <image>
+               <Image url="@/images/logo.png"/>
+            </image>
          </ImageView>
-         <Label styleClass="entete-titre" text="CARPE" />
 
-         <Region HBox.hgrow="ALWAYS" />
+         <Label text="CARPE" styleClass="entete-titre"/>
 
-         <Button styleClass="entete-menu" text="≡" />
+         <Region HBox.hgrow="ALWAYS"/>
+
+         <Button fx:id="menuButton" styleClass="entete-menu" text="≡"/>
       </HBox>
    </top>
 
@@ -93,15 +94,7 @@
 
       </VBox>
    </center>
-<bottom>
-   <HBox spacing="10">
-      <ToggleButton fx:id="toggleAPCM" text="Afficher l'ACPM" />
-      
-      <Button fx:id="checkConnexite" text="Verrifier la connexité du graphe" />
-      <Region HBox.hgrow="ALWAYS" />
-      <Button fx:id="creditsButton" text="Credits"/>
-   </HBox>
-</bottom>
+
    <right>
       <VBox fx:id="creditsPane" spacing="12" visible="false" managed="false" prefWidth="320" >
          <padding><Insets top="20" right="16" left="16" bottom="20"/></padding>

@@ -7,11 +7,13 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import javafx.geometry.Side;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,19 +28,14 @@ import java.util.stream.Collectors;
 
 public class GraphController {
 
-	@FXML
-	private ToggleButton toggleAPCM;
-
-	@FXML
-	private Button creditsButton;
+	@FXML private Button menuButton;
+	private CheckMenuItem acpmMenuItem;
 
 	@FXML
 	private VBox creditsPane;
 
 	// Panels
 
-	@FXML
-	private Button checkConnexite;
 
 	@FXML
 	private Pane graphPane;
@@ -142,9 +139,15 @@ public class GraphController {
 		rechercherButton.setOnAction(e -> calculerItineraire());
 		echangerButton.setOnAction(e -> echangerDepartArrivee());
 
-		toggleAPCM.setOnAction(e -> showACPM(toggleAPCM.isSelected()));
-		checkConnexite.setOnAction(e -> verifConnexite());
-		creditsButton.setOnAction(e->showCredits());
+		acpmMenuItem = new CheckMenuItem("Afficher l'ACPM");
+		acpmMenuItem.setOnAction(e -> showACPM(acpmMenuItem.isSelected()));
+		MenuItem connexiteItem = new MenuItem("Vérifier la connexité");
+		connexiteItem.setOnAction(e -> verifConnexite());
+		MenuItem creditsItem = new MenuItem("Crédits");
+		creditsItem.setOnAction(e -> showCredits());
+		ContextMenu contextMenu = new ContextMenu(acpmMenuItem, new SeparatorMenuItem(), connexiteItem, new SeparatorMenuItem(), creditsItem);
+		menuButton.setOnAction(e -> contextMenu.show(menuButton, Side.BOTTOM, 0, 4));
+
 		chargerHistorique();
 		rafraichirHistoriqueUI();
 

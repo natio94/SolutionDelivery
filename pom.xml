@@ -114,7 +114,7 @@
                             <jre>
                                 <minVersion>17</minVersion>
                             </jre>
-                            <icon>${project.basedir}/src/main/resources/images/icon.ico</icon>
+                            <icon>src/main/resources/images/icon.png</icon>
                         </configuration>
                     </execution>
                 </executions>
