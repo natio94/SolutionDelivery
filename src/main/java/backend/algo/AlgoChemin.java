@@ -56,35 +56,36 @@ public class AlgoChemin {
 		return poid;
 	}
 	public static double getCheminNbCorrespondances(Chemin chemin) {
-		List<Arete> aretes = chemin.cheminArete();
+		Service service = Service.getInstance();
+		Graphe graph = service.getGrapheCorrespondances();
+		Map<Quai, DistanceAntecedants> distanceMap = Dijkstra.getDistanceAntecedantsMap(graph, chemin.cheminQuai().get(0));
+
 		double poid = 0.0;
 		int i = 0;
-		while (i < aretes.size()) {
-			if (aretes.get(i).getType() != Arete.Type.pied) {
-				i++;
-				continue;
-			}
-
-			Quai quaiDebut = aretes.get(i).getSource();
-			Station stationDebut = quaiDebut.getStation();
-			double dureeTotal = 0;
-			int j = i;
-			while (j < aretes.size() && aretes.get(j).getType() == Arete.Type.pied) {
-				dureeTotal += aretes.get(j).getPoid();
-				j++;
-				if (!aretes.get(j - 1).getDestination().getStation().getId().equals(stationDebut.getId())) {
-					break; // la marche quitte la station de depart : trajet a pied vers une autre station
+		Ligne currentLigne = null;
+		Quai currentQuai = graph.getQuai(chemin.cheminQuai().get(i).getId());
+		Quai lastQuai = graph.getQuai(chemin.cheminQuai().get(chemin.cheminQuai().size() - 1).getId());
+		Arete aretePoid = null;
+		while (!currentQuai.equals(lastQuai)) {
+			for (var arete : currentQuai.getVoisins()) {
+				if (arete.getDestination().equals(chemin.cheminQuai().get(i+1))) {
+					aretePoid = arete;
+					break;
 				}
 			}
 
-			Quai quaiFin = aretes.get(j - 1).getDestination();
-			boolean memeStation = quaiFin.getStation().getId().equals(stationDebut.getId());
-			boolean changementLigne = !quaiDebut.getLigne().equals(quaiFin.getLigne());
-			if (!memeStation || changementLigne || dureeTotal > 0) {
-				poid += 1.0; // correspondance sur place ou marche entre deux stations : les deux comptent comme un changement
+			if ( aretePoid.getType() == Arete.Type.metro && !aretePoid.getDestination().getLigne().equals(currentLigne) ) {
+				if (currentLigne == null) {
+					currentLigne = aretePoid.getDestination().getLigne();
+				} else {
+					poid = poid + 1.0;
+					currentLigne = aretePoid.getDestination().getLigne();
+				}
 			}
-			i = j;
+			i = i + 1;
+			currentQuai = aretePoid.getDestination();
 		}
+
 		return poid;
 	}
 }
