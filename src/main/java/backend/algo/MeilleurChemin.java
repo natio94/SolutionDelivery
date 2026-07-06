@@ -22,6 +22,36 @@ public class MeilleurChemin {
 		Collections.reverse(cheminQuai);
 		Collections.reverse(cheminArete);
 
+		Quai previous_quai, next_quai;
+		// eliminate the walks between Quai in the starting station
+		if (cheminQuai.size() > 1) {
+			current_quai = cheminQuai.get(0);
+			next_quai = cheminQuai.get(1);
+			while (cheminQuai.size() > 1 && current_quai.getStation().equals(next_quai.getStation())) {
+				cheminQuai.remove(current_quai);
+				poid = poid - cheminArete.get(0).getPoid();
+				cheminArete.remove(0);
+				current_quai = cheminQuai.get(0);
+				if (cheminQuai.size() > 1) {
+					next_quai = cheminQuai.get(1);
+				}
+			}
+		}
+		// eliminate the walks between Quai in the ending station
+		if (cheminQuai.size() > 1) {
+			current_quai = cheminQuai.get(cheminQuai.size()-1);
+			previous_quai = cheminQuai.get(cheminQuai.size()-2);
+			while (cheminQuai.size() > 1 && current_quai.getStation().equals(previous_quai.getStation())) {
+				cheminQuai.remove(current_quai);
+				poid = poid - cheminArete.get(cheminQuai.size() - 1).getPoid();
+				cheminArete.remove(cheminQuai.size() - 1);
+				current_quai = cheminQuai.get(cheminQuai.size()-1);
+				if (cheminQuai.size() > 1) {
+					previous_quai = cheminQuai.get(cheminQuai.size()-2);
+				}
+			}
+		}
+
 		return new Chemin(cheminQuai, cheminArete, poid);
 	}
 
