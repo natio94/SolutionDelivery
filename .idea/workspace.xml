@@ -7,12 +7,11 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5aff04f8-e7a1-4fe1-baec-cabfb4889236" name="Changes" comment="Adding credits">
-      <change beforePath="$PROJECT_DIR$/.ai/mcp/mcp.json" beforeDir="false" />
+    <list default="true" id="b943f4ed-9bc3-4476-8789-19b2b2453a77" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/algo/AlgoChemin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/algo/AlgoChemin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/backend/gtfs/ConstructeurGraphe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/backend/gtfs/ConstructeurGraphe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/frontend/ui/controllers/GraphController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Appli.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Appli.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,27 +131,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.SolutionDelivery [clean].executor": "Run",
-    "Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor": "Run",
-    "Maven.SolutionDelivery [package].executor": "Run",
-    "Maven.SolutionDelivery [test].executor": "Run",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.SolutionDelivery [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SolutionDelivery [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SolutionDelivery [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SolutionDelivery [test].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ayuna/OneDrive/Documents/GitHub/SolutionDelivery&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Yu\Documents\GitHub\SolutionDelivery\src\main\resources\images" />

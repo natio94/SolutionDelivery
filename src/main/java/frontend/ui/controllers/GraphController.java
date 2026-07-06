@@ -439,16 +439,32 @@ public class GraphController {
 						depStation.getNom() + " → " + finStation.getNom(), formaterDuree(duree)));
 				i = j;
 			} else {
-				Station depStation = quais.get(i).getStation();
-				Station finStation = quais.get(i + 1).getStation();
-				double duree = arete.getPoid();
-				if (depStation.getId().equals(finStation.getId())) {
-					etapes.add(new EtapeDetail("🔁", "Correspondance", depStation.getNom(), formaterDuree(duree)));
-				} else {
-					etapes.add(new EtapeDetail("🚶", "Marche",
-							depStation.getNom() + " → " + finStation.getNom(), formaterDuree(duree)));
+				// Regrouper toute marche consécutive qui reste dans la même station en une seule étape
+				Station stationDebut = quais.get(i).getStation();
+				Ligne ligneDebut = quais.get(i).getLigne();
+				double duree = 0;
+				int j = i;
+				while (j < aretes.size()
+						&& aretes.get(j).getType() == Arete.Type.pied
+						&& quais.get(j + 1).getStation().getId().equals(stationDebut.getId())) {
+					duree += aretes.get(j).getPoid();
+					j++;
 				}
-				i++;
+
+				if (j == i) {
+					// La marche quitte directement la station : trajet a pied entre deux stations
+					Station finStation = quais.get(i + 1).getStation();
+					etapes.add(new EtapeDetail("🚶", "Marche",
+							stationDebut.getNom() + " → " + finStation.getNom(), formaterDuree(arete.getPoid())));
+					i++;
+				} else {
+					Ligne ligneFin = quais.get(j).getLigne();
+					boolean changementLigne = !ligneDebut.equals(ligneFin);
+					if (changementLigne || duree > 0) {
+						etapes.add(new EtapeDetail("🔁", "Correspondance", stationDebut.getNom(), formaterDuree(duree)));
+					}
+					i = j;
+				}
 			}
 		}
 		return etapes;
@@ -788,13 +804,14 @@ public class GraphController {
 				Station stationDest = quai.getStation();
 
 				if (stationSrc.getId().equals(stationDest.getId())) {
-					//correspondance: vérifier que ce sont bien des lignes différentes
+					//correspondance: changement de ligne, ou changement de quai réel (poids > 0)
+					if (!prevQuai.getLigne().equals(quai.getLigne()) || aretePied.getPoid() > 0) {
+						StationView stNode = stationNodes.get(stationSrc.getId());
 
-					StationView stNode = stationNodes.get(stationSrc.getId());
+						if (stNode != null)
 
-					if (stNode != null)
-
-						correspMap.computeIfAbsent(stNode, k -> new ArrayList<>()).add(aretePied);
+							correspMap.computeIfAbsent(stNode, k -> new ArrayList<>()).add(aretePied);
+					}
 
 				} else {
 					//trajet entre stations

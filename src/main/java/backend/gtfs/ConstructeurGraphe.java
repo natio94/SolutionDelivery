@@ -93,12 +93,17 @@ public class ConstructeurGraphe {
                     station.addQuai(quai);
                 }
 
-                // Créer l'arête metro vers ce Quai depuis le précédent
+				//on ne garde que la première arête créée pour un couple de quais donné, pour éviter des doublons à poids différents sur le même trajet)
                 if (quaiPrecedent != null) {
-                    int duree = parseTemps(st.time()) - tempsPrecedent;
-                    Arete a = new Arete(quaiPrecedent, quai, duree, ligne, Arete.Type.metro);
-                    quaiPrecedent.addVoisin(a);
-                    g.addArete(a);
+                    Quai destination = quai;
+                    boolean existeDeja = quaiPrecedent.getVoisins().stream()
+                            .anyMatch(v -> v.getType() == Arete.Type.metro && v.getDestination().equals(destination));
+                    if (!existeDeja) {
+                        int duree = parseTemps(st.time()) - tempsPrecedent;
+                        Arete a = new Arete(quaiPrecedent, quai, duree, ligne, Arete.Type.metro);
+                        quaiPrecedent.addVoisin(a);
+                        g.addArete(a);
+                    }
                 }
 
                 quaiPrecedent = quai;
@@ -155,16 +160,6 @@ public class ConstructeurGraphe {
     }
 
 
-    // Source - https://stackoverflow.com/a/16794680
-    // Posted by David George, modified by community. See post 'Timeline' for change history
-    // Retrieved 2026-07-02, License - CC BY-SA 4.0
-    /**
-     * Calculate distance between two points in latitude and longitude
-     * Uses Haversine method as its base.
-     * 
-     * lat1, lon1 Start point lat2, lon2 End point 
-     * @returns Distance in Kilometers
-     */
     public static double distance(double lat1, double lat2, double lon1, double lon2) {
 
 	    final int R = 6371; // Radius of the earth
