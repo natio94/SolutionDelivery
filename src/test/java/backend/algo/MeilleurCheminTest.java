@@ -1,11 +1,13 @@
-package backend.algo;
+package backend;
 
-import backend.Service;
+import backend.algo.Dijkstra;
+import backend.algo.MeilleurChemin;
 import backend.models.*;
 
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 class MeilleurCheminTest {
 
