@@ -70,7 +70,29 @@ public class MeilleurChemin {
 			}
 		}
 
-		return MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+		Chemin resultCheminCorrespondances = MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+
+		// change the aretes so that their weight is the time, not 0 or 1 meaning there is a transfer / no transfer
+		List<Arete> cheminArete = new ArrayList<>();
+		Graphe graphTemps = service.getGraphe();
+		Map<Quai, DistanceAntecedants> distanceMapTemps = Dijkstra.getDistanceAntecedantsMap(graph, resultCheminCorrespondances.cheminQuai().get(0));
+		int i = 0;
+		Quai currentQuai = graphTemps.getQuai(resultCheminCorrespondances.cheminQuai().get(i).getId());
+		Quai lastQuai = graphTemps.getQuai(resultCheminCorrespondances.cheminQuai().get(resultCheminCorrespondances.cheminQuai().size() - 1).getId());
+		Arete aretePoid = null;
+		while (!currentQuai.equals(lastQuai)) {
+			for (var arete : currentQuai.getVoisins()) {
+				if (arete.getDestination().equals(resultCheminCorrespondances.cheminQuai().get(i+1))) {
+					aretePoid = arete;
+					break;
+				}
+			}
+			cheminArete.add(aretePoid);
+			i = i + 1;
+			currentQuai = aretePoid.getDestination();
+		}
+
+		return new Chemin(resultCheminCorrespondances.cheminQuai(), cheminArete, resultCheminCorrespondances.poid());
 	}
 
 	public static Chemin MeilleurCheminCO2(Station origin, Station destination) {
@@ -94,6 +116,28 @@ public class MeilleurChemin {
 			}
 		}
 
-		return MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+		Chemin resultCheminCorrespondances = MeilleurChemin(distanceMapMin, originQuaiMin, destinationQuaiMin);
+
+		// change the aretes so that their weight is the time, not the CO2
+		List<Arete> cheminArete = new ArrayList<>();
+		Graphe graphTemps = service.getGraphe();
+		Map<Quai, DistanceAntecedants> distanceMapTemps = Dijkstra.getDistanceAntecedantsMap(graph, resultCheminCorrespondances.cheminQuai().get(0));
+		int i = 0;
+		Quai currentQuai = graphTemps.getQuai(resultCheminCorrespondances.cheminQuai().get(i).getId());
+		Quai lastQuai = graphTemps.getQuai(resultCheminCorrespondances.cheminQuai().get(resultCheminCorrespondances.cheminQuai().size() - 1).getId());
+		Arete aretePoid = null;
+		while (!currentQuai.equals(lastQuai)) {
+			for (var arete : currentQuai.getVoisins()) {
+				if (arete.getDestination().equals(resultCheminCorrespondances.cheminQuai().get(i+1))) {
+					aretePoid = arete;
+					break;
+				}
+			}
+			cheminArete.add(aretePoid);
+			i = i + 1;
+			currentQuai = aretePoid.getDestination();
+		}
+
+		return new Chemin(resultCheminCorrespondances.cheminQuai(), cheminArete, resultCheminCorrespondances.poid());
 	}
 }
