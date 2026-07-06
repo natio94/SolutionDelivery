@@ -69,23 +69,21 @@ public class AlgoChemin {
 			Station stationDebut = quaiDebut.getStation();
 			double dureeTotal = 0;
 			int j = i;
-			while (j < aretes.size()
-					&& aretes.get(j).getType() == Arete.Type.pied
-					&& aretes.get(j).getDestination().getStation().getId().equals(stationDebut.getId())) {
+			while (j < aretes.size() && aretes.get(j).getType() == Arete.Type.pied) {
 				dureeTotal += aretes.get(j).getPoid();
 				j++;
+				if (!aretes.get(j - 1).getDestination().getStation().getId().equals(stationDebut.getId())) {
+					break; // la marche quitte la station de depart : trajet a pied vers une autre station
+				}
 			}
 
-			if (j > i) {
-				Quai quaiFin = aretes.get(j - 1).getDestination();
-				boolean changementLigne = !quaiDebut.getLigne().equals(quaiFin.getLigne());
-				if (changementLigne || dureeTotal > 0) {
-					poid += 1.0;
-				}
-				i = j;
-			} else {
-				i++; // marche qui quitte directement la station : pas une correspondance
+			Quai quaiFin = aretes.get(j - 1).getDestination();
+			boolean memeStation = quaiFin.getStation().getId().equals(stationDebut.getId());
+			boolean changementLigne = !quaiDebut.getLigne().equals(quaiFin.getLigne());
+			if (!memeStation || changementLigne || dureeTotal > 0) {
+				poid += 1.0; // correspondance sur place ou marche entre deux stations : les deux comptent comme un changement
 			}
+			i = j;
 		}
 		return poid;
 	}
